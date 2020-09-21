@@ -10,12 +10,12 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <router-link class="nav-link" activeClass="active" aria-current="page" to="/">Home</router-link>
+                <router-link class="nav-link" activeClass="active" aria-current="page" to="/" exact>Home</router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" v-if="!auth">
                 <router-link class="nav-link" activeClass="active" aria-current="page" to="/login">Login</router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" v-if="!auth">
                 <router-link class="nav-link" activeClass="active" aria-current="page" to="/signup">Signup</router-link>
               </li>
               <li class="nav-item dropdown">
@@ -30,17 +30,40 @@
                 </ul>
               </li>
             </ul>
-            <form class="d-flex">
-              <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+              <button v-if="auth" @click="logout" class="btn btn-danger">logout</button>
           </div>
         </div>
       </nav>
+      <template v-for="(msg, index) in messages">
+      <Alert :message="msg.message" :className="msg.class" :key="index"/>
+      </template>
       <router-view/>
     </div>
 </div>
 </template>
+
+<script>
+import Alert from '@/components/Alert.vue';
+
+export default {
+  computed: {
+    auth() {
+      return this.$store.getters.isAuthenticated;
+    },
+    messages() {
+      return this.$store.getters.messages;
+    }
+  },
+  methods: {
+    logout(){
+      this.$store.dispatch('logout');
+    }
+  },
+  components: {
+    Alert
+  }
+}
+</script>
 
 <style lang="scss">
 
