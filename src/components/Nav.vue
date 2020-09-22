@@ -1,0 +1,53 @@
+<template>
+    <nav id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark mt-3 mb-4">
+        <div class="container-fluid">
+          <router-link class="navbar-brand" to="/">WPN</router-link>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <router-link class="nav-link" activeClass="active" aria-current="page" to="/" exact>Home</router-link>
+              </li>
+              <li class="nav-item" v-if="auth">
+                <router-link class="nav-link" activeClass="active" aria-current="page" to="/logs">Logs</router-link>
+              </li>
+              <li class="nav-item" v-if="auth">
+                <router-link class="nav-link" activeClass="active" aria-current="page" to="/notification">Send Notification</router-link>
+              </li>
+              <li class="nav-item dropdown d-none">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+              <button v-if="auth" @click="logout" class="btn btn-danger">logout</button>
+              <router-link v-if="!auth" class="btn btn-success mr-2" activeClass="active" aria-current="page" to="/login">login</router-link>
+              <router-link v-if="!auth" class="btn btn-primary" activeClass="active" aria-current="page" to="/signup">signup</router-link>
+          </div>
+        </div>
+    </nav>
+</template>
+
+<script>
+export default {
+    computed: {
+        auth() {
+            return this.$store.getters.isAuthenticated;
+        }
+    },
+
+    methods: {
+        logout(){
+            this.$store.dispatch('logout');
+        }
+    },
+}
+</script>

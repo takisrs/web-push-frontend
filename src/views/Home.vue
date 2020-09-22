@@ -1,18 +1,19 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <button class="btn btn-primary" @click="getSubscriptions">Get Subscriptions</button>
+    <button class="btn btn-success ml-2" @click="sendNotification">Send Notification</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
-
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  methods: {
+    getSubscriptions() {
+      this.$store.dispatch('getSubscriptions');
+    },
+    sendNotification() {
+      this.$store.dispatch('sendNotification');
+    }
   }
 }
 </script>
