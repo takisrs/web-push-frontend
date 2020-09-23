@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router/index'
 
 Vue.use(Vuex);
 
@@ -58,7 +59,21 @@ export default new Vuex.Store({
             });
         },
 
-        login({ commit }, payload) {
+        checkAutoLogin({ commit }){
+            const token = localStorage.getItem('token');
+            const userId = localStorage.getItem('userId');
+            const tokenExpiration = localStorage.getItem('tokenExpiration');
+            const now = new Date();
+
+            if (token && tokenExpiration && userId && now <= new Date(tokenExpiration)){
+                commit('auth', {
+                    token: token,
+                    userId : userId
+                })
+            }
+        },
+
+        login({ commit, dispatch }, payload) {
             fetch(BACKEND_BASE_URL + '/auth/login', {
                 method: 'POST',
                 headers: {
@@ -76,7 +91,14 @@ export default new Vuex.Store({
                         userId: data.data.userId,
                         token: data.data.token,
                     });
+                    let now = new Date();
+                    now.setSeconds( now.getSeconds() + 3600 );
+                    localStorage.setItem('token', data.data.token);
+                    localStorage.setItem('userId', data.data.userId);
+                    localStorage.setItem('tokenExpiration', now);
+                    dispatch('setAutoLogout', 3600);
                     commit('setMessage', { message: data.message, class: 'success'});
+                    router.push('/');
                 } else {
                     commit('setMessage', { message: data.message, class: 'danger'});
                 }
@@ -85,8 +107,17 @@ export default new Vuex.Store({
             });
         },
 
+        setAutoLogout({ commit }, expiration){
+            setTimeout(() => 
+                commit('logout'), 
+                expiration * 1000
+            )
+        },
+
         logout({ commit }){
             commit('logout');
+            localStorage.clear();
+            router.push('/login');
         },
 
         getSubscriptions({ commit, state }){
@@ -108,7 +139,7 @@ export default new Vuex.Store({
             });
         },
 
-        sendNotification({ state, commit }){
+        sendNotification({ state, commit }, payload){
             
             fetch(BACKEND_BASE_URL + '/notifications/send', {
                 method: 'POST',
@@ -117,29 +148,14 @@ export default new Vuex.Store({
                     'Authorization': 'Bearer '+state.token
                 },
                 body: JSON.stringify({
-                    title: "Web Push Notifications",
-                    message: "Just an example notification",
-                    image: "https://miro.medium.com/max/1200/1*m5RYM_Wkj4LsZewpigV5tg.jpeg",
-                    icon: "https://raw.githubusercontent.com/gurayyarar/NodeJsPackageManager/master/images/app.png",
-                    badge: "https://raw.githubusercontent.com/gurayyarar/NodeJsPackageManager/master/images/app.png",
-                    vibrate: [100, 20, 100],
+                    title: payload.title,
+                    message: payload.message,
+                    image: payload.image,
+                    icon: payload.icon,
+                    badge: payload.badge,
+                    vibrate: payload.vibrate,
                     tag: "alert",
-                    renotify: true,
-                    data: {
-                        url: "https://nodejs.org/en/"	
-                    },
-                    actions: [
-                        {
-                            action: "confirm",
-                            title: "Read More",
-                            icon: "https://cdn1.iconfinder.com/data/icons/color-bold-style/21/34-512.png"
-                        },
-                        {
-                            action: "cancel",
-                            title: "Close",
-                            icon: "https://icons-for-free.com/iconfiles/png/512/cercle+close+delete+dismiss+remove+icon-1320196712448219692.png"
-                        }
-                    ]
+                    renotify: true
                 })
             }).then(response => {
                 return response.json();

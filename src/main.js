@@ -7,6 +7,13 @@ import './assets/app.scss';
 
 Vue.config.productionTip = false
 
+Vue.directive('date', {
+  bind: function (el) {
+    const date = new Date(el.innerText);
+    el.innerText = date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0];
+  }
+});
+
 new Vue({
   router,
   store,

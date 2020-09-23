@@ -2,7 +2,7 @@
     <div>
         <h1>Logs</h1>
         <ul class="logs">
-            <li class="logs__entry" v-for="(log, index) in logs" :key="index">{{ log.added }} - {{ log.response.statusCode }}</li>
+            <li class="logs__entry" v-for="(log, index) in logs" :key="index"><span v-date>{{ log.added }}</span> {{ log.notification.title }} - {{ log.response.statusCode }}</li>
         </ul>
     </div>
 </template>
@@ -44,7 +44,11 @@ export default {
     margin: 0;
 
     &__entry{
-        padding: 1rem 0;
+        padding: 0.3rem 0;
+
+        span{
+            font-weight:bold;
+        }
     }
 }
 </style>
