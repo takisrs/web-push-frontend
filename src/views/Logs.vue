@@ -1,9 +1,26 @@
 <template>
     <div>
         <h1>Logs</h1>
-        <ul class="logs">
-            <li class="logs__entry" v-for="(log, index) in logs" :key="index"><span v-date>{{ log.added }}</span> {{ log.notification.title }} - {{ log.response.statusCode }}</li>
-        </ul>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Notification</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Success</th>
+                    <th scope="col">Fail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(stat, index) in stats" :key="index">
+                    <th scope="row">{{ index }}</th>
+                    <td>{{ stat.total }}</td>
+                    <td>{{ stat.success }}</td>
+                    <td>{{ stat.fail }}</td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 </template>
 
@@ -11,7 +28,8 @@
 export default {
     data() {
         return {
-            logs: []
+            logs: [],
+            stats: {}
         }
     },
     created() {
@@ -26,7 +44,29 @@ export default {
         }).then(data => {
             if (data.ok) {
                 this.logs = data.data;
-                console.log(data.data);
+                for (const log of this.logs){
+                    console.log(log);
+                    //this.stats.push(log.notification.title);
+                    if (this.stats[log.notification.title] !== undefined){
+                        this.stats[log.notification.title]['total']++;
+                        if (log.response.statusCode == 201)
+                            this.stats[log.notification.title]['success']++;
+                        else
+                            this.stats[log.notification.title]['fail']++;
+                    } else {
+                        this.$set(this.stats, log.notification.title, {
+                            total: 0,
+                            success: 0,
+                            fail: 0
+                        });
+                        this.stats[log.notification.title] = {
+                            total: 0,
+                            success: 0,
+                            fail: 0
+                        };
+                    }
+                    
+                }
             } else {
                 console.log(data.message);
             }

@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "bootstrap": "^5.0.0-alpha1",
+    "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
+    "vee-validate": "^3.4.0",
     "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.1",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },

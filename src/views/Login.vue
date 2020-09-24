@@ -1,11 +1,15 @@
 <template>
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <div class="alert alert-danger" v-if="message">{{ message }}</div>
             <form method="POST" v-if="showForm">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" id="email" name="email" placeholder="Email..." v-model="email" class="form-control">
+                    <ValidationProvider name="email" rules="required|email" tag="div">
+                        <div slot-scope="{ errors }">
+                            <input type="text" v-model="email" class="form-control" placeholder="Email..." id="email" name="email">
+                            <p class="errors">{{ errors[0] }}</p>
+                        </div>
+                    </ValidationProvider>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -20,22 +24,70 @@
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate';
+
 export default {
     data() {
         return {
             email: "",
             password: "",
-            message: undefined,
             showForm: true
         }
     },
     methods: {
+        validate(){
+            if (this.email == '' || this.password == ''){
+                this.$store.commit('setMessage', {
+                    class:"danger", 
+                    message:"The email field is required"
+                });
+                return false;
+            }
+
+            if (this.password == ''){
+                this.$store.commit('setMessage', {
+                    class:"danger", 
+                    message:"The password field is required"
+                });
+                return false;
+            }
+
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!re.test(String(this.email).toLowerCase())){
+                this.$store.commit('setMessage', {
+                    class:"danger", 
+                    message:"Invalid Email"
+                });
+                return false;
+            }
+
+            return true;
+        },
         login(){
-            this.$store.dispatch('login', {
-                email: this.email,
-                password: this.password
-            });
+            if (this.validate()){
+                this.$store.dispatch('login', {
+                    email: this.email,
+                    password: this.password
+                });
+            }
+            
         }
+    },
+    components: {
+        ValidationProvider
     }
 }
 </script>
+
+<style lang="scss">
+    .errors{
+        color:#ff0000;
+        padding:0.4rem 0;
+        font-size:0.8rem;
+        font-weight:300;
+        
+        &:empty{
+            padding:0;
+        }
+    }
+</style>

@@ -18,6 +18,7 @@ export default new Vuex.Store({
             state.userId = data.userId;
         },
         setMessage(state, data){
+            console.log(state.messages);
             state.messages.push({
                 message: data.message,
                 class: data.class
@@ -33,6 +34,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        setMessage({ commit }, message){
+            commit("setMessage", message);
+        },
         signup({ commit }, payload) {
             fetch(BACKEND_BASE_URL + "/auth/signup", {
                 method: "POST",
