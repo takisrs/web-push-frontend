@@ -1,7 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div v-if="showForm">
+        <div class="col-md-6">
             <form method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
@@ -23,10 +22,6 @@
                     <input type="submit" class="btn btn-success" @click.prevent="signup()" value="Submit"/>
                 </div>
             </form>
-            </div>
-            <div v-if="message">
-                <div class="alert alert-warning">{{ message }}</div>
-            </div>
         </div>
     </div>
 </template>
@@ -36,12 +31,10 @@
 export default {
     data(){
         return {
-            showForm: true,
             name: "",
             email: "",
             password: "",
-            website: "",
-            message: undefined
+            website: ""
         }
     },
     methods: {

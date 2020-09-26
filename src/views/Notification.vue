@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6">
             <form method="POST">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>

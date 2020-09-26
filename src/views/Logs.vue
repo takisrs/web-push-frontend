@@ -59,11 +59,6 @@ export default {
                             success: 0,
                             fail: 0
                         });
-                        this.stats[log.notification.title] = {
-                            total: 0,
-                            success: 0,
-                            fail: 0
-                        };
                     }
                     
                 }

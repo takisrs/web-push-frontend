@@ -1,7 +1,7 @@
 <template>
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <form method="POST" v-if="showForm">
+        <div class="col-md-6">
+            <form method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <ValidationProvider name="email" rules="required|email" tag="div">
@@ -30,8 +30,7 @@ export default {
     data() {
         return {
             email: "",
-            password: "",
-            showForm: true
+            password: ""
         }
     },
     methods: {
