@@ -8,17 +8,16 @@ const BACKEND_BASE_URL = "http://localhost:3000";
 
 export default new Vuex.Store({
     state: {
-        userId: null,
+        userData: null,
         token: null,
         messages: []
     },
     mutations: {
         auth(state, data) {
             state.token = data.token;
-            state.userId = data.userId;
+            state.userData = data.userData;
         },
         setMessage(state, data){
-            console.log(data);
             state.messages.push({
                 message: data.message,
                 class: data.class
@@ -30,7 +29,7 @@ export default new Vuex.Store({
         },
         logout(state){
             state.token = null;
-            state.userId = null;
+            state.userData = null;
         }
     },
     actions: {
@@ -65,14 +64,14 @@ export default new Vuex.Store({
 
         checkAutoLogin({ commit }){
             const token = localStorage.getItem('token');
-            const userId = localStorage.getItem('userId');
+            const userData = JSON.parse(localStorage.getItem('userData'));
             const tokenExpiration = localStorage.getItem('tokenExpiration');
             const now = new Date();
 
-            if (token && tokenExpiration && userId && now <= new Date(tokenExpiration)){
+            if (token && tokenExpiration && userData && now <= new Date(tokenExpiration)){
                 commit('auth', {
                     token: token,
-                    userId : userId
+                    userData : userData
                 })
             }
         },
@@ -91,14 +90,20 @@ export default new Vuex.Store({
                 return response.json();
             }).then(data => {
                 if (data.ok) {
-                    commit('auth', {
+                    const userData = {
                         userId: data.data.userId,
+                        userEmail: data.data.userEmail,
+                        website: data.data.website,
+                        vapidPublicKey: data.data.vapidPublicKey
+                    };
+                    commit('auth', {
+                        userData: userData,
                         token: data.data.token,
                     });
                     let now = new Date();
                     now.setSeconds( now.getSeconds() + 3600 );
                     localStorage.setItem('token', data.data.token);
-                    localStorage.setItem('userId', data.data.userId);
+                    localStorage.setItem('userData', JSON.stringify(userData));
                     localStorage.setItem('tokenExpiration', now);
                     dispatch('setAutoLogout', 3600);
                     commit('setMessage', { message: data.message, class: 'success'});
@@ -175,8 +180,11 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        userData(state){
+            return state.userData;
+        },
         isAuthenticated(state) {
-            return state.userId !== null;
+            return state.userData !== null;
         },
         messages(state){
             return state.messages;

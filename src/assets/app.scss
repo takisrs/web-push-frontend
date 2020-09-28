@@ -82,3 +82,9 @@ $body-color:                $gray-900 !default;
 // Utilities
 @import "~bootstrap/scss/utilities/api";
 // scss-docs-end import-stack
+
+pre{
+  background: $gray-300;
+  padding: 1rem 1rem;
+  border-radius: 0.2rem;
+}

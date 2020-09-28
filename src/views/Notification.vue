@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import validationMixin from '@/mixins/validation.js';
+
 export default {
     data(){
         return {
@@ -48,15 +50,27 @@ export default {
     },
     methods: {
         sendNotification() {
-            this.$store.dispatch("sendNotification", {
-                title: this.title,
-                message: this.message,
-                image: this.image,
-                icon: this.icon,
-                badge: this.badge,
-                vibrate: this.vibrate.split(',')
-            });
+            if (this.validate([
+                { field: 'title', value: this.title, rules: ['required'] },
+                { field: 'message', value: this.message, rules: ['required'] },
+                { field: 'image', value: this.image, rules: ['required', 'url'] },
+                { field: 'icon', value: this.icon, rules: ['required', 'url'] },
+                { field: 'badge', value: this.badge, rules: ['required', 'url'] },
+                { field: 'vibrate', value: this.vibrate, rules: ['required'] },
+            ])){
+                this.$store.dispatch("sendNotification", {
+                    title: this.title,
+                    message: this.message,
+                    image: this.image,
+                    icon: this.icon,
+                    badge: this.badge,
+                    vibrate: this.vibrate.split(',')
+                });
+            }
         }
-    }
+    },
+    mixins: [
+        validationMixin
+    ]
 }
 </script>

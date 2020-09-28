@@ -47,23 +47,26 @@ export default {
                 for (const log of this.logs){
                     console.log(log);
                     //this.stats.push(log.notification.title);
-                    if (this.stats[log.notification.title] !== undefined){
-                        this.stats[log.notification.title]['total']++;
-                        if (log.response.statusCode == 201)
-                            this.stats[log.notification.title]['success']++;
-                        else
-                            this.stats[log.notification.title]['fail']++;
-                    } else {
+                    if (this.stats[log.notification.title] == undefined){
                         this.$set(this.stats, log.notification.title, {
                             total: 0,
                             success: 0,
                             fail: 0
                         });
                     }
+
+                    this.stats[log.notification.title]['total']++;
+                    if (log.response.statusCode == 201)
+                        this.stats[log.notification.title]['success']++;
+                    else
+                        this.stats[log.notification.title]['fail']++;
                     
                 }
             } else {
-                console.log(data.message);
+                this.$store.commit('setMessage', {
+                    class: "warning", 
+                    message: data.message
+                });
             }
         }).catch(error => {
             console.log(error);
