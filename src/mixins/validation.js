@@ -1,0 +1,45 @@
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export default {
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+        validate(toValidate){
+            let valid = true;
+            if (toValidate.length > 0){
+                for (let i = 0; i < toValidate.length; i++){
+                    toValidate[i].rules.forEach(rule => {
+                        console.log('validating...', toValidate[i].field);
+                        valid = this.check(toValidate[i].field, toValidate[i].value, rule) && valid;
+                    });
+                }
+            }
+
+            return valid;
+
+        },
+        check(field, value, rule){
+            if (rule == 'required'){
+                if (value == ''){
+                    this.$store.commit('setMessage', {
+                        class:"danger", 
+                        message:"The "+field+" field is required"
+                    });
+                    return false;
+                }
+            } else if (rule == 'email'){
+                if (!EMAIL_REGEX.test(String(value).toLowerCase())){
+                    this.$store.commit('setMessage', {
+                        class:"danger", 
+                        message:"Invalid Email"
+                    });
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}

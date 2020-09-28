@@ -28,6 +28,8 @@
 
 
 <script>
+import validationMixin from '@/mixins/validation';
+
 export default {
     data(){
         return {
@@ -39,13 +41,24 @@ export default {
     },
     methods: {
         signup() {
-            this.$store.dispatch('signup', {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-                website: this.website
-            });
+            if (this.validate([
+                    { field: 'name', value: this.name, rules: ['required'] },
+                    { field: 'email', value: this.email, rules: ['required', 'email'] },
+                    { field: 'password', value: this.password, rules: ['required'] },
+                    { field: 'website', value: this.website, rules: ['required'] },
+                ])){
+                    this.$store.dispatch('signup', {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                        website: this.website
+                    });
+            }
         }
-    }
+
+    },
+    mixins: [
+        validationMixin
+    ]
 }
 </script>

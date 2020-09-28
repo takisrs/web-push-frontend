@@ -4,12 +4,7 @@
             <form method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <ValidationProvider name="email" rules="required|email" tag="div">
-                        <div slot-scope="{ errors }">
-                            <input type="text" v-model="email" class="form-control" placeholder="Email..." id="email" name="email">
-                            <p class="errors">{{ errors[0] }}</p>
-                        </div>
-                    </ValidationProvider>
+                    <input type="text" v-model="email" class="form-control" placeholder="Email..." id="email" name="email">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -24,7 +19,7 @@
 </template>
 
 <script>
-import { ValidationProvider } from 'vee-validate';
+import validationMixin from '@/mixins/validation.js';
 
 export default {
     data() {
@@ -34,36 +29,11 @@ export default {
         }
     },
     methods: {
-        validate(){
-            if (this.email == '' || this.password == ''){
-                this.$store.commit('setMessage', {
-                    class:"danger", 
-                    message:"The email field is required"
-                });
-                return false;
-            }
-
-            if (this.password == ''){
-                this.$store.commit('setMessage', {
-                    class:"danger", 
-                    message:"The password field is required"
-                });
-                return false;
-            }
-
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if (!re.test(String(this.email).toLowerCase())){
-                this.$store.commit('setMessage', {
-                    class:"danger", 
-                    message:"Invalid Email"
-                });
-                return false;
-            }
-
-            return true;
-        },
         login(){
-            if (this.validate()){
+            if (this.validate([
+                { field: 'email', value: this.email, rules: ['required', 'email'] },
+                { field: 'password', value: this.password, rules: ['required'] },
+            ])){
                 this.$store.dispatch('login', {
                     email: this.email,
                     password: this.password
@@ -72,9 +42,9 @@ export default {
             
         }
     },
-    components: {
-        ValidationProvider
-    }
+    mixins: [
+        validationMixin
+    ]
 }
 </script>
 

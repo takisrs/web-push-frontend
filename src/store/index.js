@@ -18,14 +18,14 @@ export default new Vuex.Store({
             state.userId = data.userId;
         },
         setMessage(state, data){
-            console.log(state.messages);
+            console.log(data);
             state.messages.push({
                 message: data.message,
                 class: data.class
             });
 
             setTimeout(()=>{
-                state.messages = [];
+                state.messages.shift();
             }, 4000);
         },
         logout(state){
