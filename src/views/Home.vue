@@ -30,7 +30,12 @@ export default {
   },
   methods: {
     getSubscriptions() {
-      this.$store.dispatch("getSubscriptions");
+      this.$store.dispatch("getSubscriptions").then(values => {
+        console.log(values);
+      }).catch(error => {
+        console.log(error);
+      });
+      
     },
   },
 };

@@ -49,14 +49,5 @@ export default {
 </script>
 
 <style lang="scss">
-    .errors{
-        color:#ff0000;
-        padding:0.4rem 0;
-        font-size:0.8rem;
-        font-weight:300;
-        
-        &:empty{
-            padding:0;
-        }
-    }
+
 </style>
