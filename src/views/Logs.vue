@@ -32,11 +32,15 @@ export default {
             stats: {}
         }
     },
+    computed: {
+        token () {
+            return this.$store.getters.token;
+        } 
+    },
     created() {
-        console.log('created');
         fetch("http://localhost:3000/logs", {
             headers: {
-                'Authorization': 'Bearer '+this.$store.state.token
+                'Authorization': 'Bearer ' + this.token
             }
         }).then(response => {
             //if (response.ok && response.status == 200)
