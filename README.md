@@ -1,7 +1,7 @@
 # Web Push Notifications - Frontend implementation
 A simple frontend implementation in Vue.js for Web Push Notifications Backend
 
-Find backend implementation [here](https://github.com/takisrs).
+Find backend implementation [here](https://github.com/takisrs/web-push-backend).
 
 ## Project setup and build
 Install dependencies:<br/>
