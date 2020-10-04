@@ -7,7 +7,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+              <li class="nav-item" v-if="auth">
                 <router-link class="nav-link" activeClass="active" aria-current="page" to="/" exact>Home</router-link>
               </li>
               <li class="nav-item" v-if="auth">
@@ -15,17 +15,6 @@
               </li>
               <li class="nav-item" v-if="auth">
                 <router-link class="nav-link" activeClass="active" aria-current="page" to="/notification">Send Notification</router-link>
-              </li>
-              <li class="nav-item dropdown d-none">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
               </li>
             </ul>
               <button v-if="auth" @click="logout" class="btn btn-danger">logout</button>

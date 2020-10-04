@@ -88,3 +88,15 @@ pre{
   padding: 1rem 1rem;
   border-radius: 0.2rem;
 }
+
+.wrapper{
+  min-height:20rem;
+}
+
+.footer{
+  background:$gray-200;
+  padding:0.4rem 1rem;
+  margin-top:1rem;
+  display:flex;
+  justify-content:flex-end;
+}
