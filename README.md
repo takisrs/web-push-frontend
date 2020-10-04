@@ -1,24 +1,20 @@
-# web-push-admin
+# Web Push Notifications - Frontend implementation
+A simple frontend implementation in Vue.js for Web Push Notifications Backend
 
-## Project setup
+Find backend implementation [here](https://github.com/takisrs).
+
+## Project setup and build
+Install dependencies:<br/>
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
+<br/><br/>
+Compile and serve for development:<br/>
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
+<br/><br/>
+Compile for production:<br/>
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
