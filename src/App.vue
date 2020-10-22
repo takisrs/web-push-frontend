@@ -14,7 +14,7 @@
       </main>
 
       <footer class="footer" role="contentinfo">
-        Developed by <a class="ml-1" target="_blank" rel=noopener href="https://github.com/takisrs">Panos Pantazopoulos</a>
+        Developed by <a class="ml-1" target="_blank" rel="noopener" href="https://github.com/takisrs">Panos Pantazopoulos</a>
       </footer>
 
     </div>
