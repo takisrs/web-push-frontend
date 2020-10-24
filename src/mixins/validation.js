@@ -14,7 +14,6 @@ export default {
             if (toValidate.length > 0){
                 for (let i = 0; i < toValidate.length; i++){
                     toValidate[i].rules.forEach(rule => {
-                        console.log('validating...', toValidate[i].field);
                         valid = this.check(toValidate[i].field, toValidate[i].value, rule) && valid;
                     });
                 }
