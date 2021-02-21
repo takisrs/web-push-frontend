@@ -29,9 +29,32 @@ export default {
 
     },
 
+    getScript({ commit, state }, payload){
+        return new Promise((resolve, reject) => {
+            fetch(process.env.VUE_APP_ENDPOINT + "/scripts/" + payload.type + "?minify=1", {
+                headers: {
+                    'Authorization': 'Bearer '+state.auth.token
+                }
+            }).then(response => {
+                //if (response.ok && response.status == 200)
+                return response.text();
+            }).then(data => {
+                //if (data.ok) {
+                    resolve(data);
+                //} else {
+                //    reject(data.message);
+                //}
+            }).catch(error => {
+                commit('setMessage', { message: error.message, class: 'danger'});
+                reject(error.message);
+            });
+        })
+
+    },
+
     sendNotification({ state, commit }, payload){
         
-        fetch(process.env.VUE_APP_ENDPOINT + '/notifications/send', {
+        fetch(process.env.VUE_APP_ENDPOINT + '/notifications/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +68,8 @@ export default {
                 badge: payload.badge,
                 vibrate: payload.vibrate,
                 tag: "alert",
-                renotify: true
+                renotify: true,
+                //"scheduledAt": "2021-02-11"
             })
         }).then(response => {
             return response.json();

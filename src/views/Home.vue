@@ -15,6 +15,14 @@
           Vapid public key:
           <pre>{{ userData.vapidPublicKey }}</pre>
         </div>
+        <div>
+          Main script:
+          <pre>{{ scripts.main }}</pre>
+        </div>
+        <div>
+          sw:
+          <pre>{{ scripts.sw }}</pre>
+        </div>
         <a href="#" class="btn btn-primary" @click="getSubscriptions">Get Subscriptions</a>
       </div>
     </div>
@@ -23,6 +31,14 @@
 
 <script>
 export default {
+  data() {
+    return {
+        scripts: {
+          main: "",
+          sw: ""
+        }
+    }
+  },
   computed: {
     userData() {
       return this.$store.getters.userData;
@@ -35,8 +51,17 @@ export default {
       }).catch(error => {
         console.log(error);
       });
-      
     },
+    getScript(type) {
+      this.$store.dispatch("getScript", { type: type }).then(data => {
+        this.scripts[type] = data;
+      });
+    }
   },
+  created() {
+    this.getScript('main');
+    this.getScript('sw');
+  }
+
 };
 </script>
