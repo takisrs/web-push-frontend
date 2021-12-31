@@ -13,7 +13,10 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+      <div
+        class="collapse navbar-collapse d-flex justify-content-between"
+        id="navbarSupportedContent"
+      >
         <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
           <li class="nav-item" v-if="auth">
             <router-link
@@ -80,7 +83,7 @@ export default {
 
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch('logout');
     },
   },
 };

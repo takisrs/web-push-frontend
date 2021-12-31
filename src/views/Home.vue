@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="card">
-      <div class="card-header">
-        User details
-      </div>
+      <div class="card-header">User details</div>
       <div class="card-body">
         <div>User email: {{ userData.userEmail }}</div>
         <div>Associated website: {{ userData.website }}</div>
@@ -23,7 +21,9 @@
           sw:
           <pre>{{ scripts.sw }}</pre>
         </div>
-        <a href="#" class="btn btn-primary" @click="getSubscriptions">Get Subscriptions</a>
+        <a href="#" class="btn btn-primary" @click="getSubscriptions"
+          >Get Subscriptions</a
+        >
       </div>
     </div>
   </div>
@@ -33,11 +33,11 @@
 export default {
   data() {
     return {
-        scripts: {
-          main: "",
-          sw: ""
-        }
-    }
+      scripts: {
+        main: '',
+        sw: '',
+      },
+    };
   },
   computed: {
     userData() {
@@ -46,22 +46,24 @@ export default {
   },
   methods: {
     getSubscriptions() {
-      this.$store.dispatch("getSubscriptions").then(values => {
-        console.log(values);
-      }).catch(error => {
-        console.log(error);
-      });
+      this.$store
+        .dispatch('getSubscriptions')
+        .then((values) => {
+          console.log(values);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getScript(type) {
-      this.$store.dispatch("getScript", { type: type }).then(data => {
+      this.$store.dispatch('getScript', { type: type }).then((data) => {
         this.scripts[type] = data;
       });
-    }
+    },
   },
   created() {
     this.getScript('main');
     this.getScript('sw');
-  }
-
+  },
 };
 </script>

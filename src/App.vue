@@ -1,24 +1,29 @@
 <template>
   <div id="app">
     <div class="container">
-
       <header class="header">
-        <Nav/>
+        <Nav />
       </header>
 
       <main class="wrapper" role="main">
         <template v-for="(msg, index) in messages">
-        <Alert :message="msg.message" :className="msg.class" :key="index"/>
+          <Alert :message="msg.message" :className="msg.class" :key="index" />
         </template>
-        <router-view/>
+        <router-view />
       </main>
 
       <footer class="footer" role="contentinfo">
-        Developed by <a class="ml-1" target="_blank" rel="noopener" href="https://github.com/takisrs">Panos Pantazopoulos</a>
+        Developed by
+        <a
+          class="ml-1"
+          target="_blank"
+          rel="noopener"
+          href="https://github.com/takisrs"
+          >Panos Pantazopoulos</a
+        >
       </footer>
-
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -32,19 +37,17 @@ export default {
     },
     messages() {
       return this.$store.getters.messages;
-    }
+    },
   },
   components: {
     Alert,
-    Nav
+    Nav,
   },
-  created(){
+  created() {
     if (!this.$store.getters.isAuthenticated)
       this.$store.dispatch('checkAutoLogin');
-  }
-}
+  },
+};
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

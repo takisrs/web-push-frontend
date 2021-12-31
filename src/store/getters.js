@@ -1,5 +1,5 @@
 export default {
-    messages(state){
-        return state.messages;
-    }
-}
+  messages(state) {
+    return state.messages;
+  },
+};
