@@ -5,9 +5,7 @@
       <div class="card-body">
         <div>User email: {{ userData.userEmail }}</div>
         <div class="my-2">Associated website: {{ userData.website }}</div>
-        <div class="my-2">
-          Total subscriptions: {{ totalSubscriptions }}
-        </div>
+        <div class="my-2">Total subscriptions: {{ totalSubscriptions }}</div>
         <div>
           User id:
           <pre>{{ userData.userId }}</pre>
@@ -35,8 +33,8 @@ export default {
     return {
       totalSubscriptions: 0,
       scripts: {
-        main: "",
-        sw: "",
+        main: '',
+        sw: '',
       },
     };
   },
@@ -48,7 +46,7 @@ export default {
   methods: {
     getSubscriptions() {
       this.$store
-        .dispatch("getSubscriptions")
+        .dispatch('getSubscriptions')
         .then((response) => {
           this.totalSubscriptions = response.data.totalItems;
         })
@@ -57,14 +55,14 @@ export default {
         });
     },
     getScript(type) {
-      this.$store.dispatch("getScript", { type: type }).then((data) => {
+      this.$store.dispatch('getScript', { type: type }).then((data) => {
         this.scripts[type] = data;
       });
     },
   },
   created() {
-    this.getScript("main");
-    this.getScript("sw");
+    this.getScript('main');
+    this.getScript('sw');
     this.getSubscriptions();
   },
 };
