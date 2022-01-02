@@ -4,7 +4,10 @@
       <div class="card-header">User details</div>
       <div class="card-body">
         <div>User email: {{ userData.userEmail }}</div>
-        <div>Associated website: {{ userData.website }}</div>
+        <div class="my-2">Associated website: {{ userData.website }}</div>
+        <div class="my-2">
+          Total subscriptions: {{ totalSubscriptions }}
+        </div>
         <div>
           User id:
           <pre>{{ userData.userId }}</pre>
@@ -15,15 +18,12 @@
         </div>
         <div>
           Main script:
-          <pre>{{ scripts.main }}</pre>
+          <pre><code>{{ scripts.main }}</code></pre>
         </div>
         <div>
-          sw:
-          <pre>{{ scripts.sw }}</pre>
+          Service worker:
+          <pre><code>{{ scripts.sw }}</code></pre>
         </div>
-        <a href="#" class="btn btn-primary" @click="getSubscriptions"
-          >Get Subscriptions</a
-        >
       </div>
     </div>
   </div>
@@ -33,9 +33,10 @@
 export default {
   data() {
     return {
+      totalSubscriptions: 0,
       scripts: {
-        main: '',
-        sw: '',
+        main: "",
+        sw: "",
       },
     };
   },
@@ -47,23 +48,24 @@ export default {
   methods: {
     getSubscriptions() {
       this.$store
-        .dispatch('getSubscriptions')
-        .then((values) => {
-          console.log(values);
+        .dispatch("getSubscriptions")
+        .then((response) => {
+          this.totalSubscriptions = response.data.totalItems;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     getScript(type) {
-      this.$store.dispatch('getScript', { type: type }).then((data) => {
+      this.$store.dispatch("getScript", { type: type }).then((data) => {
         this.scripts[type] = data;
       });
     },
   },
   created() {
-    this.getScript('main');
-    this.getScript('sw');
+    this.getScript("main");
+    this.getScript("sw");
+    this.getSubscriptions();
   },
 };
 </script>

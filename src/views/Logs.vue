@@ -39,7 +39,7 @@ export default {
   created() {
     fetch(`${process.env.VUE_APP_ENDPOINT}/logs`, {
       headers: {
-        Authorization: 'Bearer ' + this.token,
+        Authorization: "Bearer " + this.token,
       },
     })
       .then((response) => {
@@ -50,8 +50,6 @@ export default {
         if (data.ok) {
           this.logs = data.data;
           for (const log of this.logs) {
-            console.log(log);
-            //this.stats.push(log.notification.title);
             if (this.stats[log.notification.title] == undefined) {
               this.$set(this.stats, log.notification.title, {
                 total: 0,
@@ -60,14 +58,14 @@ export default {
               });
             }
 
-            this.stats[log.notification.title]['total']++;
+            this.stats[log.notification.title]["total"]++;
             if (log.response.statusCode == 201)
-              this.stats[log.notification.title]['success']++;
-            else this.stats[log.notification.title]['fail']++;
+              this.stats[log.notification.title]["success"]++;
+            else this.stats[log.notification.title]["fail"]++;
           }
         } else {
-          this.$store.commit('setMessage', {
-            class: 'warning',
+          this.$store.commit("setMessage", {
+            class: "warning",
             message: data.message,
           });
         }

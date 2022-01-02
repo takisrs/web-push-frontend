@@ -13,9 +13,8 @@
       </main>
 
       <footer class="footer" role="contentinfo">
-        Developed by
+        Developed by&nbsp;
         <a
-          class="ml-1"
           target="_blank"
           rel="noopener"
           href="https://github.com/takisrs"
