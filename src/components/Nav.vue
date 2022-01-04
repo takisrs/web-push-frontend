@@ -42,6 +42,15 @@
               class="nav-link"
               activeClass="active"
               aria-current="page"
+              to="/notifications"
+              >Notifications</router-link
+            >
+          </li>
+          <li class="nav-item" v-if="auth">
+            <router-link
+              class="nav-link"
+              activeClass="active"
+              aria-current="page"
               to="/notification"
               >Send Notification</router-link
             >

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Signup from '../views/Signup.vue';
 import Logs from '../views/Logs.vue';
+import Notifications from '../views/Notifications.vue';
 import Notification from '../views/Notification.vue';
 import store from '../store/index';
 
@@ -38,6 +39,14 @@ const routes = [
     path: '/logs',
     name: 'Logs',
     component: Logs,
+    meta: {
+      requireAuthentication: true,
+    },
+  },
+  {
+    path: '/notifications/:page?',
+    name: 'Notifications',
+    component: Notifications,
     meta: {
       requireAuthentication: true,
     },
