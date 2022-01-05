@@ -3,6 +3,7 @@ export default {
     state.messages.push({
       message: data.message,
       class: data.class,
+      type: data.type || 'toast'
     });
 
     setTimeout(() => {

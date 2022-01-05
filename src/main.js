@@ -3,13 +3,12 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import { Alert } from 'bootstrap';
+import './assets/app.scss';
 
-var alertList = document.querySelectorAll('.alert');
+const alertList = document.querySelectorAll('.alert');
 alertList.forEach(function (alert) {
   new Alert(alert);
 });
-
-import './assets/app.scss';
 
 Vue.config.productionTip = false;
 

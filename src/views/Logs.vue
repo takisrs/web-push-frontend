@@ -66,7 +66,7 @@ export default {
         } else {
           this.$store.commit('setMessage', {
             class: 'warning',
-            message: data.message,
+            message: data.message
           });
         }
       })
