@@ -20,6 +20,11 @@
             :key="index"
           />
         </div>
+        <div v-if="isLoading" class="text-center">
+          <div class="spinner-grow loading-spinner" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <router-view />
       </main>
 
@@ -40,6 +45,9 @@ import Nav from '@/components/Nav.vue';
 
 export default {
   computed: {
+    isLoading() {
+      return this.$store.getters.isLoading;
+    },
     auth() {
       return this.$store.getters.isAuthenticated;
     },

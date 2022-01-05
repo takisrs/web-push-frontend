@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!isLoading">
     <h1>Logs</h1>
 
     <table class="table">
@@ -35,8 +35,12 @@ export default {
     token() {
       return this.$store.getters.token;
     },
+    isLoading() {
+      return this.$store.getters.isLoading;
+    }
   },
   created() {
+    this.$store.commit('setIsLoading', true);
     fetch(`${process.env.VUE_APP_ENDPOINT}/logs`, {
       headers: {
         Authorization: 'Bearer ' + this.token,
@@ -47,21 +51,23 @@ export default {
         return response.json();
       })
       .then((data) => {
+        this.$store.commit('setIsLoading', false);
         if (data.ok) {
           this.logs = data.data;
           for (const log of this.logs) {
-            if (this.stats[log.notification.title] == undefined) {
-              this.$set(this.stats, log.notification.title, {
+            const notificationIdentifier = log.notification._id + ' // ' + log.notification.title;
+            if (this.stats[notificationIdentifier] == undefined) {
+              this.$set(this.stats, notificationIdentifier, {
                 total: 0,
                 success: 0,
                 fail: 0,
               });
             }
 
-            this.stats[log.notification.title]['total']++;
+            this.stats[notificationIdentifier]['total']++;
             if (log.response.statusCode == 201)
-              this.stats[log.notification.title]['success']++;
-            else this.stats[log.notification.title]['fail']++;
+              this.stats[notificationIdentifier]['success']++;
+            else this.stats[notificationIdentifier]['fail']++;
           }
         } else {
           this.$store.commit('setMessage', {
@@ -71,6 +77,7 @@ export default {
         }
       })
       .catch((error) => {
+        this.$store.commit('setIsLoading', false);
         console.log(error);
       });
   },

@@ -14,7 +14,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
-        class="collapse navbar-collapse d-flex justify-content-between"
+        class="collapse navbar-collapse justify-content-between"
         id="navbarSupportedContent"
       >
         <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
@@ -33,8 +33,8 @@
               class="nav-link"
               activeClass="active"
               aria-current="page"
-              to="/logs"
-              >Logs</router-link
+              to="/notifications"
+              >Notifications</router-link
             >
           </li>
           <li class="nav-item" v-if="auth">
@@ -42,8 +42,8 @@
               class="nav-link"
               activeClass="active"
               aria-current="page"
-              to="/notifications"
-              >Notifications</router-link
+              to="/logs"
+              >Logs</router-link
             >
           </li>
           <li class="nav-item" v-if="auth">

@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <h1>Notifications</h1>
-
+  <div v-if="!isLoading">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>Notifications</h1>
+      <router-link to="/notification" class="btn btn-success" tag="button">Create Notification</router-link>
+    </div>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -10,6 +12,7 @@
           <th scope="col">Message</th>
           <th scope="col">Status</th>
           <th scope="col">Sent at</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +22,14 @@
           <td>{{ notification.message }}</td>
           <td>{{ notification.status }}</td>
           <td v-date:time>{{ notification.sentAt }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-danger"
+              @click.prevent="deleteNotification(notification._id)"
+            >
+              Delete
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -58,6 +69,9 @@ export default {
     token() {
       return this.$store.getters.token;
     },
+    isLoading() {
+      return this.$store.getters.isLoading;
+    },
   },
   watch: {
     '$route.params.page': function (page) {
@@ -66,6 +80,7 @@ export default {
   },
   methods: {
     getNotifications(page) {
+      this.$store.commit('setIsLoading', true);
       fetch(
         `${process.env.VUE_APP_ENDPOINT}/notifications?limit=10&page=${page}`,
         {
@@ -78,8 +93,8 @@ export default {
           return response.json();
         })
         .then((result) => {
+          this.$store.commit('setIsLoading', false);
           if (result.ok) {
-            console.log(result.data);
             this.notifications = result.data.notifications;
             this.totalPages = result.data.totalPages;
             this.currentPage = result.data.currentPage;
@@ -91,7 +106,39 @@ export default {
           }
         })
         .catch((error) => {
+          this.$store.commit('setIsLoading', false);
           console.log(error);
+        });
+    },
+    deleteNotification(id) {
+      fetch(`${process.env.VUE_APP_ENDPOINT}/notifications/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + this.token,
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          if (result.ok) {
+            this.$store.commit('setMessage', {
+              class: 'success',
+              message: result.message,
+            });
+            this.getNotifications(this.currentPage);
+          } else {
+            this.$store.commit('setMessage', {
+              class: 'danger',
+              message: result.message,
+            });
+          }
+        })
+        .catch(() => {
+          this.$store.commit('setMessage', {
+            class: 'danger',
+            message: 'Error Occured',
+          });
         });
     },
   },

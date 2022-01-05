@@ -41,7 +41,7 @@ $spacer: 1rem !default;
 $body-bg: $white !default;
 $body-color: $gray-900 !default;
 
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
 pre {
   background: $gray-300;
@@ -51,6 +51,11 @@ pre {
 
 .wrapper {
   min-height: 20rem;
+}
+
+.loading-spinner {
+  width: 4rem;
+  height: 4rem;
 }
 
 .footer {
