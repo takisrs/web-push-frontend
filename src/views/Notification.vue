@@ -69,6 +69,17 @@
           />
         </div>
         <div class="mb-3">
+          <label for="scheduledAt" class="form-label">Scheduled for</label>
+          <input
+            type="datetime-local"
+            id="scheduledAt"
+            name="scheduledAt"
+            placeholder="scheduled at..."
+            v-model="scheduledAt"
+            class="form-control"
+          />
+        </div>
+        <div class="mb-3">
           <input
             type="submit"
             class="btn btn-success"
@@ -78,11 +89,20 @@
         </div>
       </form>
     </div>
+    <div class="col-sm-6">
+      <NotificationPreview
+        :title="title"
+        :message="message"
+        :image="image"
+        :icon="icon"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import validationMixin from '@/mixins/validation.js';
+import NotificationPreview from '../components/NotificationPreview.vue';
 
 export default {
   data() {
@@ -92,6 +112,7 @@ export default {
       image: '',
       icon: '',
       badge: '',
+      scheduledAt: '',
       vibrate: '100,20,100',
     };
   },
@@ -114,10 +135,14 @@ export default {
           icon: this.icon,
           badge: this.badge,
           vibrate: this.vibrate.split(','),
+          scheduledAt: this.scheduledAt,
         });
       }
     },
   },
   mixins: [validationMixin],
+  components: {
+    NotificationPreview,
+  },
 };
 </script>

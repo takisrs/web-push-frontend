@@ -11,6 +11,7 @@
           <th scope="col">Title</th>
           <th scope="col">Message</th>
           <th scope="col">Status</th>
+          <th scope="col">Scheduled at</th>
           <th scope="col">Sent at</th>
           <th scope="col">Actions</th>
         </tr>
@@ -21,6 +22,7 @@
           <td>{{ notification.title }}</td>
           <td>{{ notification.message }}</td>
           <td>{{ notification.status }}</td>
+          <td v-date:time>{{ notification.scheduledAt }}</td>
           <td v-date:time>{{ notification.sentAt }}</td>
           <td>
             <button

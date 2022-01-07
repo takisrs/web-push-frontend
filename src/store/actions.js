@@ -75,7 +75,7 @@ export default {
         vibrate: payload.vibrate,
         tag: 'alert',
         renotify: true,
-        //"scheduledAt": "2021-02-11"
+        scheduledAt: payload.scheduledAt
       }),
     })
       .then((response) => {
