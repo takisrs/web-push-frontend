@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown';
+import VueMarkdown from '@adapttive/vue-markdown';
 import markdown from 'raw-loader!../assets/documentation.md';
 
 export default {
