@@ -1,3 +1,5 @@
+import router from '../router/index';
+
 export default {
   setMessage({ commit }, message) {
     commit('setMessage', message);
@@ -57,7 +59,7 @@ export default {
     });
   },
 
-  sendNotification({ state, commit }, payload) {
+  createNotification({ state, commit }, payload) {
     fetch(process.env.VUE_APP_ENDPOINT + '/notifications/', {
       method: 'POST',
       headers: {
@@ -82,6 +84,7 @@ export default {
       .then((data) => {
         if (data.ok) {
           commit('setMessage', { message: data.message, class: 'success' });
+          router.push('/notifications');
         } else {
           commit('setMessage', { message: data.message, class: 'danger' });
         }

@@ -2,7 +2,7 @@
   <div v-if="!isLoading">
     <div class="d-flex justify-content-between align-items-center">
       <h1>Notifications</h1>
-      <router-link to="/notification" class="btn btn-success" tag="button">Create Notification</router-link>
+      <router-link to="/notification/create" class="btn btn-success" tag="button">Create Notification</router-link>
     </div>
     <table class="table table-striped table-hover">
       <thead>

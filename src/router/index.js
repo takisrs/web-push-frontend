@@ -6,6 +6,7 @@ import Signup from '../views/Signup.vue';
 import Logs from '../views/Logs.vue';
 import Notifications from '../views/Notifications.vue';
 import Notification from '../views/Notification.vue';
+import Documentation from '../views/Documentation.vue';
 import store from '../store/index';
 
 Vue.use(VueRouter);
@@ -44,6 +45,14 @@ const routes = [
     },
   },
   {
+    path: '/documentation',
+    name: 'Documentation',
+    component: Documentation,
+    meta: {
+      requireAuthentication: true,
+    },
+  },
+  {
     path: '/notifications/:page?',
     name: 'Notifications',
     component: Notifications,
@@ -52,7 +61,7 @@ const routes = [
     },
   },
   {
-    path: '/notification',
+    path: '/notification/create',
     name: 'Notification',
     component: Notification,
     meta: {
@@ -62,6 +71,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 

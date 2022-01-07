@@ -51,8 +51,8 @@
               class="nav-link"
               activeClass="active"
               aria-current="page"
-              to="/notification"
-              >Send Notification</router-link
+              to="/documentation"
+              >API Documentation</router-link
             >
           </li>
         </ul>

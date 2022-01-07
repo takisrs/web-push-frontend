@@ -72,7 +72,7 @@
           <input
             type="submit"
             class="btn btn-success"
-            @click.prevent="sendNotification()"
+            @click.prevent="createNotification()"
             value="Submit"
           />
         </div>
@@ -96,7 +96,7 @@ export default {
     };
   },
   methods: {
-    sendNotification() {
+    createNotification() {
       if (
         this.validate([
           { field: 'title', value: this.title, rules: ['required'] },
@@ -107,7 +107,7 @@ export default {
           { field: 'vibrate', value: this.vibrate, rules: ['required'] },
         ])
       ) {
-        this.$store.dispatch('sendNotification', {
+        this.$store.dispatch('createNotification', {
           title: this.title,
           message: this.message,
           image: this.image,
