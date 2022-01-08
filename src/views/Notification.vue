@@ -89,7 +89,6 @@
           >
             <option value="DRAFT">DRAFT</option>
             <option value="PENDING">PENDING</option>
-            <option value="COMPLETED">COMPLETED</option>
           </select>
         </div>
         <div class="mb-3">
