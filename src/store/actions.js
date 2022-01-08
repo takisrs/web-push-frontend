@@ -60,6 +60,24 @@ export default {
   },
 
   createNotification({ state, commit }, payload) {
+    let extraParams = {};
+    if (payload.url) {
+      extraParams = {
+        data: {
+          url: payload.url,
+        },
+        actions: [
+          {
+            action: 'confirm',
+            title: 'Read More',
+          },
+          {
+            action: 'cancel',
+            title: 'Close',
+          },
+        ],
+      };
+    }
     fetch(process.env.VUE_APP_ENDPOINT + '/notifications/', {
       method: 'POST',
       headers: {
@@ -75,7 +93,8 @@ export default {
         vibrate: payload.vibrate,
         tag: 'alert',
         renotify: true,
-        scheduledAt: payload.scheduledAt
+        scheduledAt: payload.scheduledAt,
+        ...extraParams,
       }),
     })
       .then((response) => {

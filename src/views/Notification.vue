@@ -25,6 +25,17 @@
           />
         </div>
         <div class="mb-3">
+          <label for="url" class="form-label">Url</label>
+          <input
+            type="text"
+            id="url"
+            name="url"
+            placeholder="url..."
+            v-model="url"
+            class="form-control"
+          />
+        </div>
+        <div class="mb-3">
           <label for="image" class="form-label">Image</label>
           <input
             type="text"
@@ -109,6 +120,7 @@ export default {
     return {
       title: '',
       message: '',
+      url: '',
       image: '',
       icon: '',
       badge: '',
@@ -122,6 +134,7 @@ export default {
         this.validate([
           { field: 'title', value: this.title, rules: ['required'] },
           { field: 'message', value: this.message, rules: ['required'] },
+          { field: 'url', value: this.image, rules: ['url'] },
           { field: 'image', value: this.image, rules: ['required', 'url'] },
           { field: 'icon', value: this.icon, rules: ['required', 'url'] },
           { field: 'badge', value: this.badge, rules: ['required', 'url'] },
@@ -131,6 +144,7 @@ export default {
         this.$store.dispatch('createNotification', {
           title: this.title,
           message: this.message,
+          url: this.url,
           image: this.image,
           icon: this.icon,
           badge: this.badge,
