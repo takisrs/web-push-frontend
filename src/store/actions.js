@@ -93,6 +93,7 @@ export default {
         vibrate: payload.vibrate,
         tag: 'alert',
         renotify: true,
+        status: payload.status,
         scheduledAt: payload.scheduledAt,
         ...extraParams,
       }),

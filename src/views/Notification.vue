@@ -80,6 +80,18 @@
           />
         </div>
         <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <select
+            id="status"
+            name="status"
+            class="form-select"
+            v-model="status"
+          >
+            <option value="DRAFT">DRAFT</option>
+            <option value="PENDING">PENDING</option>
+          </select>
+        </div>
+        <div class="mb-3">
           <label for="scheduledAt" class="form-label">Scheduled for</label>
           <input
             type="datetime-local"
@@ -124,6 +136,7 @@ export default {
       image: '',
       icon: '',
       badge: '',
+      status: 'DRAFT',
       scheduledAt: '',
       vibrate: '100,20,100',
     };
@@ -148,6 +161,7 @@ export default {
           image: this.image,
           icon: this.icon,
           badge: this.badge,
+          status: this.status,
           vibrate: this.vibrate.split(','),
           scheduledAt: this.scheduledAt,
         });
