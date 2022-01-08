@@ -33,7 +33,7 @@
               notification.sentAt
             }}</span>
           </td>
-          <td class="d-flex">
+          <td style="width: 130px">
             <router-link
               :to="'notification/edit/' + notification._id"
               tag="button"
@@ -46,7 +46,7 @@
               <Icon name="edit" />
             </router-link>
             <button
-              class="btn btn-sm btn-warning mx-1"
+              class="btn btn-sm btn-info mx-1"
               @click.prevent="copyNotification(notification._id)"
             >
               <Icon name="copy" />
@@ -127,12 +127,20 @@ export default {
       });
     },
     deleteNotification(id) {
-      this.$store.dispatch('deleteNotification', { id }).then(() => {
+      this.$store.dispatch('deleteNotification', { id }).then((result) => {
+        this.$store.commit('setMessage', {
+          class: 'success',
+          message: result.message,
+        });
         this.getNotifications(this.currentPage);
       });
     },
     copyNotification(id) {
-      this.$store.dispatch('copyNotification', { id }).then(() => {
+      this.$store.dispatch('copyNotification', { id }).then((result) => {
+        this.$store.commit('setMessage', {
+          class: 'success',
+          message: result.message,
+        });
         this.getNotifications(this.currentPage);
       });
     },
