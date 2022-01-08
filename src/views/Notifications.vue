@@ -2,7 +2,12 @@
   <div v-if="!isLoading">
     <div class="d-flex justify-content-between align-items-center">
       <h1>Notifications</h1>
-      <router-link to="/notification/create" class="btn btn-success" tag="button">Create Notification</router-link>
+      <router-link
+        to="/notification/create"
+        class="btn btn-success"
+        tag="button"
+        >Create Notification</router-link
+      >
     </div>
     <table class="table table-striped table-hover">
       <thead>
@@ -23,13 +28,35 @@
           <td>{{ notification.message }}</td>
           <td>{{ notification.status }}</td>
           <td v-date:time>{{ notification.scheduledAt }}</td>
-          <td v-date:time>{{ notification.sentAt }}</td>
           <td>
+            <span v-if="notification.sentAt" v-date:time>{{
+              notification.sentAt
+            }}</span>
+          </td>
+          <td class="d-flex">
+            <router-link
+              :to="'notification/edit/' + notification._id"
+              tag="button"
+              class="btn btn-sm btn-primary"
+              :disabled="
+                notification.status != 'DRAFT' &&
+                notification.status != 'PENDING'
+              "
+            >
+              <Icon name="edit" />
+            </router-link>
+            <button
+              class="btn btn-sm btn-warning mx-1"
+              @click.prevent="copyNotification(notification._id)"
+            >
+              <Icon name="copy" />
+            </button>
             <button
               class="btn btn-sm btn-danger"
               @click.prevent="deleteNotification(notification._id)"
+              :disabled="notification.status === 'IN_PROGRESS'"
             >
-              Delete
+              <Icon name="delete" />
             </button>
           </td>
         </tr>
@@ -59,6 +86,7 @@
 </template>
 
 <script>
+import Icon from '../components/Icon.vue';
 export default {
   data() {
     return {
@@ -66,6 +94,9 @@ export default {
       currentPage: this.$route.params.page || 1,
       totalPages: 1,
     };
+  },
+  components: {
+    Icon,
   },
   computed: {
     token() {
@@ -82,66 +113,28 @@ export default {
   },
   methods: {
     getNotifications(page) {
-      this.$store.commit('setIsLoading', true);
-      fetch(
-        `${process.env.VUE_APP_ENDPOINT}/notifications?limit=10&page=${page}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + this.token,
-          },
+      this.$store.dispatch('getNotifications', { page }).then((result) => {
+        if (result.ok) {
+          this.notifications = result.data.notifications;
+          this.totalPages = result.data.totalPages;
+          this.currentPage = result.data.currentPage;
+        } else {
+          this.$store.commit('setMessage', {
+            class: 'warning',
+            message: result.message,
+          });
         }
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((result) => {
-          this.$store.commit('setIsLoading', false);
-          if (result.ok) {
-            this.notifications = result.data.notifications;
-            this.totalPages = result.data.totalPages;
-            this.currentPage = result.data.currentPage;
-          } else {
-            this.$store.commit('setMessage', {
-              class: 'warning',
-              message: result.message,
-            });
-          }
-        })
-        .catch((error) => {
-          this.$store.commit('setIsLoading', false);
-          console.log(error);
-        });
+      });
     },
     deleteNotification(id) {
-      fetch(`${process.env.VUE_APP_ENDPOINT}/notifications/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: 'Bearer ' + this.token,
-        },
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((result) => {
-          if (result.ok) {
-            this.$store.commit('setMessage', {
-              class: 'success',
-              message: result.message,
-            });
-            this.getNotifications(this.currentPage);
-          } else {
-            this.$store.commit('setMessage', {
-              class: 'danger',
-              message: result.message,
-            });
-          }
-        })
-        .catch(() => {
-          this.$store.commit('setMessage', {
-            class: 'danger',
-            message: 'Error Occured',
-          });
-        });
+      this.$store.dispatch('deleteNotification', { id }).then(() => {
+        this.getNotifications(this.currentPage);
+      });
+    },
+    copyNotification(id) {
+      this.$store.dispatch('copyNotification', { id }).then(() => {
+        this.getNotifications(this.currentPage);
+      });
     },
   },
   created() {

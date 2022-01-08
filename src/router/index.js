@@ -62,7 +62,15 @@ const routes = [
   },
   {
     path: '/notification/create',
-    name: 'Notification',
+    name: 'NotificationCreate',
+    component: Notification,
+    meta: {
+      requireAuthentication: true,
+    },
+  },
+  {
+    path: '/notification/edit/:id',
+    name: 'NotificationEdit',
     component: Notification,
     meta: {
       requireAuthentication: true,

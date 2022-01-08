@@ -89,6 +89,7 @@
           >
             <option value="DRAFT">DRAFT</option>
             <option value="PENDING">PENDING</option>
+            <option value="COMPLETED">COMPLETED</option>
           </select>
         </div>
         <div class="mb-3">
@@ -106,8 +107,10 @@
           <input
             type="submit"
             class="btn btn-success"
-            @click.prevent="createNotification()"
-            value="Submit"
+            @click.prevent="
+              $route.params.id ? editNotification() : createNotification()
+            "
+            :value="$route.params.id ? 'Update' : 'Create'"
           />
         </div>
       </form>
@@ -141,6 +144,11 @@ export default {
       vibrate: '100,20,100',
     };
   },
+  computed: {
+    token() {
+      return this.$store.getters.token;
+    },
+  },
   methods: {
     createNotification() {
       if (
@@ -167,10 +175,57 @@ export default {
         });
       }
     },
+    editNotification() {
+      if (
+        this.validate([
+          { field: 'title', value: this.title, rules: ['required'] },
+          { field: 'message', value: this.message, rules: ['required'] },
+          { field: 'url', value: this.image, rules: ['url'] },
+          { field: 'image', value: this.image, rules: ['required', 'url'] },
+          { field: 'icon', value: this.icon, rules: ['required', 'url'] },
+          { field: 'badge', value: this.badge, rules: ['required', 'url'] },
+          { field: 'vibrate', value: this.vibrate, rules: ['required'] },
+        ])
+      ) {
+        this.$store.dispatch('editNotification', {
+          id: this.$route.params.id,
+          title: this.title,
+          message: this.message,
+          url: this.url,
+          image: this.image,
+          icon: this.icon,
+          badge: this.badge,
+          status: this.status,
+          vibrate: this.vibrate.split(','),
+          scheduledAt: this.scheduledAt,
+        });
+      }
+    },
   },
   mixins: [validationMixin],
   components: {
     NotificationPreview,
+  },
+  created() {
+    if (this.$route.params.id) {
+      this.$store
+        .dispatch('getNotification', { id: this.$route.params.id })
+        .then((response) => {
+          if (response.ok) {
+            const notification = response.data.notification;
+            
+            this.title = notification.title;
+            this.message = notification.message;
+            this.url = notification.data?.url;
+            this.image = notification.image;
+            this.icon = notification.icon;
+            this.badge = notification.badge;
+            this.status = notification.status;
+            this.vibrate = notification.vibrate.join(',');
+            this.scheduledAt = notification.scheduledAt.substr(0, 19);
+          }
+        });
+    }
   },
 };
 </script>
