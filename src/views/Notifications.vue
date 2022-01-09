@@ -35,7 +35,7 @@
           </td>
           <td style="width: 130px">
             <router-link
-              :to="'notification/edit/' + notification._id"
+              :to="'/notification/edit/' + notification._id"
               tag="button"
               class="btn btn-sm btn-primary"
               :disabled="
