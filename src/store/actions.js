@@ -5,141 +5,58 @@ export default {
     commit('setMessage', message);
   },
 
-  getNotification({ commit, state }, payload) {
-    return new Promise((resolve, reject) => {
-      fetch(process.env.VUE_APP_ENDPOINT + '/notifications/' + payload.id, {
-        headers: {
-          Authorization: 'Bearer ' + state.auth.token,
-        },
-      })
-        .then((response) => {
-          //if (response.ok && response.status == 200)
-          return response.json();
-        })
-        .then((data) => {
-          if (data.ok) {
-            resolve(data);
-          } else {
-            commit('setMessage', { message: data.message, class: 'danger' });
-            reject(data.message);
-          }
-        })
-        .catch((error) => {
-          commit('setMessage', { message: error.message, class: 'danger' });
-          reject(error.message);
-        });
-    });
-  },
-
-  getNotifications({ commit, state }, payload) {
+  fetch({ commit, state }, { endpoint, method = 'GET', payload }) {
     commit('setIsLoading', true);
-    return new Promise((resolve, reject) => {
-      fetch(
-        process.env.VUE_APP_ENDPOINT + '/notifications?page=' + payload.page,
-        {
-          headers: {
-            Authorization: 'Bearer ' + state.auth.token,
-          },
+    return fetch(process.env.VUE_APP_ENDPOINT + endpoint, {
+      method: method,
+      body: method !== 'GET' ? payload : undefined,
+      headers: {
+        Authorization: 'Bearer ' + state.auth.token,
+      },
+    })
+      .then(async (response) => {
+        commit('setIsLoading', false);
+        if (response.ok) {
+          const responseData = await response.json();
+          if (!responseData.ok) throw new Error(responseData.message);
+          return responseData;
         }
-      )
-        .then((response) => {
-          //if (response.ok && response.status == 200)
-          return response.json();
-        })
-        .then((data) => {
-          commit('setIsLoading', false);
-          if (data.ok) {
-            resolve(data);
-          } else {
-            commit('setMessage', { message: data.message, class: 'danger' });
-            reject(data.message);
-          }
-        })
-        .catch((error) => {
-          commit('setIsLoading', false);
-          commit('setMessage', { message: error.message, class: 'danger' });
-          reject(error.message);
-        });
+      })
+      .catch((error) => {
+        commit('setIsLoading', false);
+        commit('setMessage', { message: error.message, class: 'danger' });
+      });
+  },
+
+  getNotification({ dispatch }, payload) {
+    return dispatch('fetch', {
+      endpoint: `/notifications/${payload.id}`,
     });
   },
 
-  deleteNotification({ commit, state }, payload) {
-    return new Promise((resolve, reject) => {
-      fetch(process.env.VUE_APP_ENDPOINT + '/notifications/' + payload.id, {
-        method: 'DELETE',
-        headers: {
-          Authorization: 'Bearer ' + state.auth.token,
-        },
-      })
-        .then((response) => {
-          //if (response.ok && response.status == 200)
-          return response.json();
-        })
-        .then((data) => {
-          if (data.ok) {
-            resolve(data);
-          } else {
-            commit('setMessage', { message: data.message, class: 'danger' });
-            reject(data.message);
-          }
-        })
-        .catch((error) => {
-          commit('setMessage', { message: error.message, class: 'danger' });
-          reject(error.message);
-        });
+  getNotifications({ dispatch }, payload) {
+    return dispatch('fetch', {
+      endpoint: `/notifications?page=${payload.page}`,
     });
   },
 
-  copyNotification({ commit, state }, payload) {
-    return new Promise((resolve, reject) => {
-      fetch(process.env.VUE_APP_ENDPOINT + '/notifications/' + payload.id, {
-        method: 'COPY',
-        headers: {
-          Authorization: 'Bearer ' + state.auth.token,
-        },
-      })
-        .then((response) => {
-          //if (response.ok && response.status == 200)
-          return response.json();
-        })
-        .then((data) => {
-          if (data.ok) {
-            resolve(data);
-          } else {
-            commit('setMessage', { message: data.message, class: 'danger' });
-            reject(data.message);
-          }
-        })
-        .catch((error) => {
-          commit('setMessage', { message: error.message, class: 'danger' });
-          reject(error.message);
-        });
+  deleteNotification({ dispatch }, payload) {
+    return dispatch('fetch', {
+      endpoint: `/notifications/${payload.id}`,
+      method: 'DELETE',
     });
   },
 
-  getSubscriptions({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      fetch(process.env.VUE_APP_ENDPOINT + '/subscriptions', {
-        headers: {
-          Authorization: 'Bearer ' + state.auth.token,
-        },
-      })
-        .then((response) => {
-          //if (response.ok && response.status == 200)
-          return response.json();
-        })
-        .then((data) => {
-          if (data.ok) {
-            resolve(data);
-          } else {
-            commit('setMessage', { message: data.message, class: 'danger' });
-            reject(data.message);
-          }
-        })
-        .catch((error) => {
-          commit('setMessage', { message: error.message, class: 'danger' });
-          reject(error.message);
-        });
+  copyNotification({ dispatch }, payload) {
+    return dispatch('fetch', {
+      endpoint: `/notifications/${payload.id}`,
+      method: 'COPY',
+    });
+  },
+
+  getSubscriptions({ dispatch }) {
+    return dispatch('fetch', {
+      endpoint: '/subscriptions',
     });
   },
 
@@ -154,15 +71,10 @@ export default {
         }
       )
         .then((response) => {
-          //if (response.ok && response.status == 200)
           return response.text();
         })
         .then((data) => {
-          //if (data.ok) {
           resolve(data);
-          //} else {
-          //    reject(data.message);
-          //}
         })
         .catch((error) => {
           commit('setMessage', { message: error.message, class: 'danger' });
