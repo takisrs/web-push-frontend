@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import authModule from '@/store/modules/auth';
+import subscriptionsModule from '@/store/modules/subscriptions';
+import notificationsModule from '@/store/modules/notifications';
 import getters from '@/store/getters';
 import actions from '@/store/actions';
 import mutations from '@/store/mutations';
@@ -17,5 +19,7 @@ export default new Vuex.Store({
   getters,
   modules: {
     auth: authModule,
+    subscriptions: subscriptionsModule,
+    notifications: notificationsModule,
   },
 });

@@ -114,15 +114,10 @@ export default {
   methods: {
     getNotifications(page) {
       this.$store.dispatch('getNotifications', { page }).then((result) => {
-        if (result.ok) {
+        if (result) {
           this.notifications = result.data.notifications;
           this.totalPages = result.data.totalPages;
           this.currentPage = result.data.currentPage;
-        } else {
-          this.$store.commit('setMessage', {
-            class: 'warning',
-            message: result.message,
-          });
         }
       });
     },

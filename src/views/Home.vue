@@ -45,18 +45,13 @@ export default {
   },
   methods: {
     getSubscriptions() {
-      this.$store
-        .dispatch('getSubscriptions')
-        .then((response) => {
-          this.totalSubscriptions = response.data.totalItems;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.$store.dispatch('getSubscriptions').then((response) => {
+        this.totalSubscriptions = response.data.totalItems;
+      });
     },
     getScript(type) {
       this.$store.dispatch('getScript', { type: type }).then((data) => {
-        this.scripts[type] = data;
+        this.scripts[type] = data.data;
       });
     },
   },
