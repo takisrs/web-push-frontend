@@ -161,17 +161,27 @@ export default {
           { field: 'vibrate', value: this.vibrate, rules: ['required'] },
         ])
       ) {
-        this.$store.dispatch('createNotification', {
-          title: this.title,
-          message: this.message,
-          url: this.url,
-          image: this.image,
-          icon: this.icon,
-          badge: this.badge,
-          status: this.status,
-          vibrate: this.vibrate.split(','),
-          scheduledAt: this.scheduledAt,
-        });
+        this.$store
+          .dispatch('createNotification', {
+            title: this.title,
+            message: this.message,
+            url: this.url,
+            image: this.image,
+            icon: this.icon,
+            badge: this.badge,
+            status: this.status,
+            vibrate: this.vibrate.split(','),
+            scheduledAt: this.scheduledAt,
+          })
+          .then((result) => {
+            if (result.ok) {
+              this.$store.commit('setMessage', {
+                class: 'success',
+                message: result.message,
+              });
+              this.$router.push('/notifications');
+            }
+          });
       }
     },
     editNotification() {
@@ -186,18 +196,28 @@ export default {
           { field: 'vibrate', value: this.vibrate, rules: ['required'] },
         ])
       ) {
-        this.$store.dispatch('editNotification', {
-          id: this.$route.params.id,
-          title: this.title,
-          message: this.message,
-          url: this.url,
-          image: this.image,
-          icon: this.icon,
-          badge: this.badge,
-          status: this.status,
-          vibrate: this.vibrate.split(','),
-          scheduledAt: this.scheduledAt,
-        });
+        this.$store
+          .dispatch('editNotification', {
+            id: this.$route.params.id,
+            title: this.title,
+            message: this.message,
+            url: this.url,
+            image: this.image,
+            icon: this.icon,
+            badge: this.badge,
+            status: this.status,
+            vibrate: this.vibrate.split(','),
+            scheduledAt: this.scheduledAt,
+          })
+          .then((result) => {
+            if (result.ok) {
+              this.$store.commit('setMessage', {
+                class: 'success',
+                message: result.message,
+              });
+              this.$router.push('/notifications');
+            }
+          });
       }
     },
   },
@@ -212,7 +232,7 @@ export default {
         .then((response) => {
           if (response.ok) {
             const notification = response.data.notification;
-            
+
             this.title = notification.title;
             this.message = notification.message;
             this.url = notification.data?.url;

@@ -37,65 +37,30 @@ export default {
     },
     isLoading() {
       return this.$store.getters.isLoading;
-    }
+    },
   },
   created() {
-    this.$store.commit('setIsLoading', true);
-    fetch(`${process.env.VUE_APP_ENDPOINT}/logs`, {
-      headers: {
-        Authorization: 'Bearer ' + this.token,
-      },
-    })
-      .then((response) => {
-        //if (response.ok && response.status == 200)
-        return response.json();
-      })
-      .then((data) => {
-        this.$store.commit('setIsLoading', false);
-        if (data.ok) {
-          this.logs = data.data;
-          for (const log of this.logs) {
-            const notificationIdentifier = log.notification._id + ' // ' + log.notification.title;
-            if (this.stats[notificationIdentifier] == undefined) {
-              this.$set(this.stats, notificationIdentifier, {
-                total: 0,
-                success: 0,
-                fail: 0,
-              });
-            }
-
-            this.stats[notificationIdentifier]['total']++;
-            if (log.response.statusCode == 201)
-              this.stats[notificationIdentifier]['success']++;
-            else this.stats[notificationIdentifier]['fail']++;
+    this.$store.dispatch('getLogs').then((response) => {
+      if (response.ok) {
+        this.logs = response.data;
+        for (const log of this.logs) {
+          const notificationIdentifier =
+            log.notification._id + ' // ' + log.notification.title;
+          if (this.stats[notificationIdentifier] == undefined) {
+            this.$set(this.stats, notificationIdentifier, {
+              total: 0,
+              success: 0,
+              fail: 0,
+            });
           }
-        } else {
-          this.$store.commit('setMessage', {
-            class: 'warning',
-            message: data.message
-          });
+
+          this.stats[notificationIdentifier]['total']++;
+          if (log.response.statusCode == 201)
+            this.stats[notificationIdentifier]['success']++;
+          else this.stats[notificationIdentifier]['fail']++;
         }
-      })
-      .catch((error) => {
-        this.$store.commit('setIsLoading', false);
-        console.log(error);
-      });
+      }
+    });
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.logs {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  &__entry {
-    padding: 0.3rem 0;
-
-    span {
-      font-weight: bold;
-    }
-  }
-}
-</style>
