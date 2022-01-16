@@ -2,7 +2,7 @@
   <div v-if="!isLoading">
     <h1>Logs</h1>
 
-    <table class="table">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th scope="col">Notification</th>

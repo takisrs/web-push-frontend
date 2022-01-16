@@ -1,29 +1,36 @@
 <template>
   <div>
-    <div class="card">
-      <div class="card-header">User details</div>
-      <div class="card-body">
-        <div>User email: {{ userData.userEmail }}</div>
-        <div class="my-2">Associated website: {{ userData.website }}</div>
-        <div class="my-2">Total subscriptions: {{ totalSubscriptions }}</div>
-        <div>
-          User id:
-          <pre>{{ userData.userId }}</pre>
-        </div>
-        <div>
-          Vapid public key:
-          <pre>{{ userData.vapidPublicKey }}</pre>
-        </div>
-        <div>
-          Main script:
-          <pre><code>{{ scripts.main }}</code></pre>
-        </div>
-        <div>
-          Service worker:
-          <pre><code>{{ scripts.sw }}</code></pre>
-        </div>
-      </div>
-    </div>
+    <h1>Web Push Notifications</h1>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="badge bg-secondary">Associated website</span>
+        {{ userData.website }}
+      </li>
+      <li class="list-group-item">
+        <span class="badge bg-secondary">User email</span>
+        {{ userData.userEmail }}
+      </li>
+      <li class="list-group-item">
+        <span class="badge bg-secondary">Total subscriptions</span>
+        {{ totalSubscriptions }}
+      </li>
+      <li class="list-group-item">
+        <span class="badge bg-secondary">User id</span>
+        {{ userData.userId }}
+      </li>
+      <li class="list-group-item">
+        <span class="badge bg-secondary">Vapid public key</span>
+        {{ userData.vapidPublicKey }}
+      </li>
+      <li class="list-group-item">
+        <span class="badge bg-secondary">Main script:</span>
+        <pre><code>{{ scripts.main }}</code></pre>
+      </li>
+      <li class="list-group-item">
+        <span class="badge bg-secondary">Service worker script:</span>
+        <pre><code>{{ scripts.sw }}</code></pre>
+      </li>
+    </ul>
   </div>
 </template>
 
