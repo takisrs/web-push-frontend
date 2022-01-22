@@ -48,18 +48,18 @@ export default {
     return {
       subscriptions: [],
       currentPage: this.$route.params.page || 1,
-      totalPages: 1,
+      totalPages: 1
     };
   },
   computed: {
     isLoading() {
       return this.$store.getters.isLoading;
-    },
+    }
   },
   watch: {
     '$route.params.page': function (page) {
       this.getSubscriptions(page);
-    },
+    }
   },
   methods: {
     getSubscriptions(page) {
@@ -70,10 +70,10 @@ export default {
           this.currentPage = result.data.currentPage;
         }
       });
-    },
+    }
   },
   created() {
     this.getSubscriptions(this.$route.params.page);
-  },
+  }
 };
 </script>

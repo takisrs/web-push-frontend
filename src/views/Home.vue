@@ -4,7 +4,7 @@
     <ul class="list-group">
       <li class="list-group-item">
         <span class="badge bg-secondary">Associated website</span>
-        {{  userData.website }}
+        {{ userData.website }}
       </li>
       <li class="list-group-item">
         <span class="badge bg-secondary">User email</span>

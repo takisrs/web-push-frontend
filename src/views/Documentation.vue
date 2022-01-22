@@ -11,7 +11,7 @@ import markdown from 'raw-loader!../assets/documentation.md';
 export default {
   data() {
     return {
-      md: markdown,
+      md: markdown
     };
   },
   /*   created() {
@@ -26,7 +26,7 @@ export default {
       });
   }, */
   components: {
-    VueMarkdown,
-  },
+    VueMarkdown
+  }
 };
 </script>

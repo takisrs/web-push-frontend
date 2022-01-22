@@ -19,11 +19,11 @@ Vue.directive('date', {
       date.toISOString().split('T')[0] +
       ' ' +
       date.toTimeString().split(' ')[0];
-  },
+  }
 });
 
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  render: (h) => h(App)
 }).$mount('#app');

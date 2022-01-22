@@ -3,8 +3,8 @@ export default {
     getSubscriptions({ dispatch }) {
       return dispatch('fetch', {
         endpoint: '/subscriptions',
-        updateLoadingState: true,
+        updateLoadingState: true
       });
-    },
-  },
+    }
+  }
 };

@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       logs: [],
-      stats: {},
+      stats: {}
     };
   },
   computed: {
@@ -37,7 +37,7 @@ export default {
     },
     isLoading() {
       return this.$store.getters.isLoading;
-    },
+    }
   },
   created() {
     this.$store.dispatch('getLogs').then((response) => {
@@ -50,7 +50,7 @@ export default {
             this.$set(this.stats, notificationIdentifier, {
               total: 0,
               success: 0,
-              fail: 0,
+              fail: 0
             });
           }
 
@@ -61,6 +61,6 @@ export default {
         }
       }
     });
-  },
+  }
 };
 </script>

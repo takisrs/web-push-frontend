@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  props: ['title', 'message', 'image', 'icon'],
+  props: ['title', 'message', 'image', 'icon']
 };
 </script>
 

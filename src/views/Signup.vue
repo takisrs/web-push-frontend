@@ -68,7 +68,7 @@ export default {
       name: '',
       email: '',
       password: '',
-      website: '',
+      website: ''
     };
   },
   methods: {
@@ -78,18 +78,18 @@ export default {
           { field: 'name', value: this.name, rules: ['required'] },
           { field: 'email', value: this.email, rules: ['required', 'email'] },
           { field: 'password', value: this.password, rules: ['required'] },
-          { field: 'website', value: this.website, rules: ['required'] },
+          { field: 'website', value: this.website, rules: ['required'] }
         ])
       ) {
         this.$store.dispatch('signup', {
           name: this.name,
           email: this.email,
           password: this.password,
-          website: this.website,
+          website: this.website
         });
       }
-    },
+    }
   },
-  mixins: [validationMixin],
+  mixins: [validationMixin]
 };
 </script>

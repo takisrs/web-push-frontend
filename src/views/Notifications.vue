@@ -92,21 +92,21 @@ export default {
     return {
       notifications: [],
       currentPage: this.$route.params.page || 1,
-      totalPages: 1,
+      totalPages: 1
     };
   },
   components: {
-    Icon,
+    Icon
   },
   computed: {
     isLoading() {
       return this.$store.getters.isLoading;
-    },
+    }
   },
   watch: {
     '$route.params.page': function (page) {
       this.getNotifications(page);
-    },
+    }
   },
   methods: {
     getNotifications(page) {
@@ -122,7 +122,7 @@ export default {
       this.$store.dispatch('deleteNotification', { id }).then((result) => {
         this.$store.commit('setMessage', {
           class: 'success',
-          message: result.message,
+          message: result.message
         });
         this.getNotifications(this.currentPage);
       });
@@ -131,14 +131,14 @@ export default {
       this.$store.dispatch('copyNotification', { id }).then((result) => {
         this.$store.commit('setMessage', {
           class: 'success',
-          message: result.message,
+          message: result.message
         });
         this.getNotifications(this.currentPage);
       });
-    },
+    }
   },
   created() {
     this.getNotifications(this.$route.params.page);
-  },
+  }
 };
 </script>

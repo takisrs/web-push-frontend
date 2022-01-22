@@ -2,13 +2,13 @@ export default {
   actions: {
     getNotification({ dispatch }, payload) {
       return dispatch('fetch', {
-        endpoint: `/notifications/${payload.id}`,
+        endpoint: `/notifications/${payload.id}`
       });
     },
 
     getNotifications({ dispatch }, payload) {
       return dispatch('fetch', {
-        endpoint: `/notifications?page=${payload.page}`,
+        endpoint: `/notifications?page=${payload.page}`
       });
     },
 
@@ -16,7 +16,7 @@ export default {
       return dispatch('fetch', {
         endpoint: `/notifications/${payload.id}`,
         method: 'DELETE',
-        updateLoadingState: false,
+        updateLoadingState: false
       });
     },
 
@@ -24,7 +24,7 @@ export default {
       return dispatch('fetch', {
         endpoint: `/notifications/${payload.id}`,
         method: 'COPY',
-        updateLoadingState: false,
+        updateLoadingState: false
       });
     },
 
@@ -39,32 +39,32 @@ export default {
         tag: 'alert',
         renotify: true,
         status: payload.status,
-        scheduledAt: payload.scheduledAt,
+        scheduledAt: payload.scheduledAt
       };
 
       if (payload.url) {
         notificationData = {
           ...notificationData,
           data: {
-            url: payload.url,
+            url: payload.url
           },
           actions: [
             {
               action: 'confirm',
-              title: 'Read More',
+              title: 'Read More'
             },
             {
               action: 'cancel',
-              title: 'Close',
-            },
-          ],
+              title: 'Close'
+            }
+          ]
         };
       }
 
       return dispatch('fetch', {
         endpoint: '/notifications',
         method: 'POST',
-        payload: JSON.stringify(notificationData),
+        payload: JSON.stringify(notificationData)
       });
     },
 
@@ -78,16 +78,16 @@ export default {
         vibrate: payload.vibrate,
         status: payload.status,
         data: {
-          url: payload.url,
+          url: payload.url
         },
-        scheduledAt: payload.scheduledAt,
+        scheduledAt: payload.scheduledAt
       };
 
       return dispatch('fetch', {
         endpoint: `/notifications/${payload.id}`,
         method: 'PUT',
-        payload: JSON.stringify(notificationData),
+        payload: JSON.stringify(notificationData)
       });
-    },
-  },
+    }
+  }
 };
