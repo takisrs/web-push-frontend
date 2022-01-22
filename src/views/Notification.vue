@@ -37,39 +37,45 @@
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image</label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            placeholder="Image..."
-            v-model="image"
-            class="form-control"
-          />
-          <ImageUploader @image-upload="image = $event" />
+          <div class="d-flex">
+            <input
+              type="text"
+              id="image"
+              name="image"
+              placeholder="Image..."
+              v-model="image"
+              class="form-control me-2"
+            />
+            <ImageUploader @image-upload="image = $event" />
+          </div>
         </div>
         <div class="mb-3">
           <label for="icon" class="form-label">Icon</label>
-          <input
-            type="text"
-            id="icon"
-            name="icon"
-            placeholder="Icon..."
-            v-model="icon"
-            class="form-control"
-          />
-          <ImageUploader @image-upload="icon = $event" />
+          <div class="d-flex">
+            <input
+              type="text"
+              id="icon"
+              name="icon"
+              placeholder="Icon..."
+              v-model="icon"
+              class="form-control me-2"
+            />
+            <ImageUploader @image-upload="icon = $event" />
+          </div>
         </div>
         <div class="mb-3">
           <label for="badge" class="form-label">Badge</label>
-          <input
-            type="text"
-            id="badge"
-            name="badge"
-            placeholder="Badge..."
-            v-model="badge"
-            class="form-control"
-          />
-          <ImageUploader @image-upload="badge = $event" />
+          <div class="d-flex">
+            <input
+              type="text"
+              id="badge"
+              name="badge"
+              placeholder="Badge..."
+              v-model="badge"
+              class="form-control me-2"
+            />
+            <ImageUploader @image-upload="badge = $event" />
+          </div>
         </div>
         <div class="mb-3">
           <label for="vibrate" class="form-label">Vibrate</label>

@@ -5,10 +5,11 @@
     height="100"
     accept="image/jpeg,image/png"
     size="10"
+    :showPreview="false"
     :hideChangeButton="true"
-    button-class="btn btn-success"
+    button-class="btn btn-info"
     :custom-strings="{
-      select: 'Select',
+      select: 'Upload',
       drag: 'Drag an image'
     }"
     @change="onChange"
