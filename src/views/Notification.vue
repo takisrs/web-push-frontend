@@ -45,6 +45,7 @@
             v-model="image"
             class="form-control"
           />
+          <ImageUploader @image-upload="image = $event" />
         </div>
         <div class="mb-3">
           <label for="icon" class="form-label">Icon</label>
@@ -56,21 +57,7 @@
             v-model="icon"
             class="form-control"
           />
-          <picture-input
-            ref="pictureInput"
-            width="100"
-            height="100"
-            accept="image/jpeg,image/png"
-            size="10"
-            :hideChangeButton="true"
-            button-class="btn btn-success"
-            :custom-strings="{
-              select: 'Select',
-              drag: 'Drag an image'
-            }"
-            @change="onChange"
-          >
-          </picture-input>
+          <ImageUploader @image-upload="icon = $event" />
         </div>
         <div class="mb-3">
           <label for="badge" class="form-label">Badge</label>
@@ -82,6 +69,7 @@
             v-model="badge"
             class="form-control"
           />
+          <ImageUploader @image-upload="badge = $event" />
         </div>
         <div class="mb-3">
           <label for="vibrate" class="form-label">Vibrate</label>
@@ -141,9 +129,9 @@
 </template>
 
 <script>
-import PictureInput from 'vue-picture-input';
 import validationMixin from '@/mixins/validation.js';
 import NotificationPreview from '../components/NotificationPreview.vue';
+import ImageUploader from '../components/ImageUploader.vue';
 
 export default {
   data() {
@@ -235,23 +223,12 @@ export default {
             }
           });
       }
-    },
-    onChange(image) {
-      if (image) {
-        const formData = new FormData();
-        formData.append('file', this.$refs.pictureInput.file);
-        this.$store.dispatch('uploadImage', formData).then((result) => {
-          if (result.ok) {
-            this.icon = result.data.fullpath;
-          }
-        });
-      }
     }
   },
   mixins: [validationMixin],
   components: {
     NotificationPreview,
-    PictureInput
+    ImageUploader
   },
   created() {
     if (this.$route.params.id) {
