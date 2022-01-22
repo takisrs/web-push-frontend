@@ -15,7 +15,7 @@
     "bootstrap": "^5.1.3",
     "core-js": "^3.20.2",
     "vue": "^2.6.14",
-    "vue-picture-input": "takisrs/vue-picture-input",
+    "vue-picture-input": "git+https://takisrs@github.com/takisrs/vue-picture-input.git",
     "vue-router": "^3.5.2",
     "vuex": "^3.6.2"
   },
