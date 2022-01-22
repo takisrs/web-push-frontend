@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-if="!isLoading">
     <h1>Web Push Notifications</h1>
     <ul class="list-group">
       <li class="list-group-item">
         <span class="badge bg-secondary">Associated website</span>
-        {{ userData.website }}
+        {{  userData.website }}
       </li>
       <li class="list-group-item">
         <span class="badge bg-secondary">User email</span>
@@ -41,14 +41,17 @@ export default {
       totalSubscriptions: 0,
       scripts: {
         main: '',
-        sw: '',
-      },
+        sw: ''
+      }
     };
   },
   computed: {
     userData() {
-      return this.$store.getters.userData;
+      return this.$store.getters.userData || {};
     },
+    isLoading() {
+      return this.$store.getters.isLoading;
+    }
   },
   methods: {
     getSubscriptions() {
@@ -60,12 +63,12 @@ export default {
       this.$store.dispatch('getScript', { type: type }).then((data) => {
         this.scripts[type] = data.data;
       });
-    },
+    }
   },
   created() {
     this.getScript('main');
     this.getScript('sw');
     this.getSubscriptions();
-  },
+  }
 };
 </script>

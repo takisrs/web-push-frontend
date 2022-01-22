@@ -60,17 +60,17 @@ export default {
       return this.$store.getters.messages.filter(
         (item) => item.type === 'alert'
       );
-    },
+    }
   },
   components: {
     Toast,
     Alert,
-    Nav,
+    Nav
   },
   created() {
     if (!this.$store.getters.isAuthenticated)
       this.$store.dispatch('checkAutoLogin');
-  },
+  }
 };
 </script>
 

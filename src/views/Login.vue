@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" v-if="!isLoading">
     <div class="col-md-6">
       <form method="POST">
         <div class="mb-3">
@@ -44,25 +44,30 @@ export default {
   data() {
     return {
       email: '',
-      password: '',
+      password: ''
     };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.isLoading;
+    }
   },
   methods: {
     login() {
       if (
         this.validate([
           { field: 'email', value: this.email, rules: ['required', 'email'] },
-          { field: 'password', value: this.password, rules: ['required'] },
+          { field: 'password', value: this.password, rules: ['required'] }
         ])
       ) {
         this.$store.dispatch('login', {
           email: this.email,
-          password: this.password,
+          password: this.password
         });
       }
-    },
+    }
   },
-  mixins: [validationMixin],
+  mixins: [validationMixin]
 };
 </script>
 
