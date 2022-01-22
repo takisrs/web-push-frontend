@@ -56,6 +56,21 @@
             v-model="icon"
             class="form-control"
           />
+          <picture-input
+            ref="pictureInput"
+            width="100"
+            height="100"
+            accept="image/jpeg,image/png"
+            size="10"
+            :hideChangeButton="true"
+            button-class="btn btn-success"
+            :custom-strings="{
+              select: 'Select',
+              drag: 'Drag an image'
+            }"
+            @change="onChange"
+          >
+          </picture-input>
         </div>
         <div class="mb-3">
           <label for="badge" class="form-label">Badge</label>
@@ -126,6 +141,7 @@
 </template>
 
 <script>
+import PictureInput from 'vue-picture-input';
 import validationMixin from '@/mixins/validation.js';
 import NotificationPreview from '../components/NotificationPreview.vue';
 
@@ -140,13 +156,13 @@ export default {
       badge: '',
       status: 'DRAFT',
       scheduledAt: '',
-      vibrate: '100,20,100',
+      vibrate: '100,20,100'
     };
   },
   computed: {
     token() {
       return this.$store.getters.token;
-    },
+    }
   },
   methods: {
     createNotification() {
@@ -154,11 +170,11 @@ export default {
         this.validate([
           { field: 'title', value: this.title, rules: ['required'] },
           { field: 'message', value: this.message, rules: ['required'] },
-          { field: 'url', value: this.image, rules: ['url'] },
+          { field: 'url', value: this.url, rules: ['url'] },
           { field: 'image', value: this.image, rules: ['required', 'url'] },
           { field: 'icon', value: this.icon, rules: ['required', 'url'] },
           { field: 'badge', value: this.badge, rules: ['required', 'url'] },
-          { field: 'vibrate', value: this.vibrate, rules: ['required'] },
+          { field: 'vibrate', value: this.vibrate, rules: ['required'] }
         ])
       ) {
         this.$store
@@ -171,13 +187,13 @@ export default {
             badge: this.badge,
             status: this.status,
             vibrate: this.vibrate.split(','),
-            scheduledAt: this.scheduledAt,
+            scheduledAt: this.scheduledAt
           })
           .then((result) => {
             if (result.ok) {
               this.$store.commit('setMessage', {
                 class: 'success',
-                message: result.message,
+                message: result.message
               });
               this.$router.push('/notifications');
             }
@@ -193,7 +209,7 @@ export default {
           { field: 'image', value: this.image, rules: ['required', 'url'] },
           { field: 'icon', value: this.icon, rules: ['required', 'url'] },
           { field: 'badge', value: this.badge, rules: ['required', 'url'] },
-          { field: 'vibrate', value: this.vibrate, rules: ['required'] },
+          { field: 'vibrate', value: this.vibrate, rules: ['required'] }
         ])
       ) {
         this.$store
@@ -207,23 +223,35 @@ export default {
             badge: this.badge,
             status: this.status,
             vibrate: this.vibrate.split(','),
-            scheduledAt: this.scheduledAt,
+            scheduledAt: this.scheduledAt
           })
           .then((result) => {
             if (result.ok) {
               this.$store.commit('setMessage', {
                 class: 'success',
-                message: result.message,
+                message: result.message
               });
               this.$router.push('/notifications');
             }
           });
       }
     },
+    onChange(image) {
+      if (image) {
+        const formData = new FormData();
+        formData.append('file', this.$refs.pictureInput.file);
+        this.$store.dispatch('uploadImage', formData).then((result) => {
+          if (result.ok) {
+            this.icon = result.data.fullpath;
+          }
+        });
+      }
+    }
   },
   mixins: [validationMixin],
   components: {
     NotificationPreview,
+    PictureInput
   },
   created() {
     if (this.$route.params.id) {
@@ -245,6 +273,6 @@ export default {
           }
         });
     }
-  },
+  }
 };
 </script>

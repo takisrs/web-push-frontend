@@ -5,15 +5,23 @@ export default {
 
   fetch(
     { commit, state },
-    { endpoint, method = 'GET', payload, updateLoadingState = true }
+    {
+      endpoint,
+      method = 'GET',
+      payload,
+      updateLoadingState = true,
+      headers = {
+        'Content-Type': 'application/json'
+      }
+    }
   ) {
     if (updateLoadingState) commit('setIsLoading', true);
     return fetch(process.env.VUE_APP_ENDPOINT + endpoint, {
       method: method,
       body: method !== 'GET' ? payload : undefined,
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + state.auth.token
+        Authorization: 'Bearer ' + state.auth.token,
+        ...headers
       }
     })
       .then(async (response) => {
@@ -26,6 +34,16 @@ export default {
         if (updateLoadingState) commit('setIsLoading', false);
         commit('setMessage', { message: error.message, class: 'danger' });
       });
+  },
+
+  uploadImage({ dispatch }, payload) {
+    return dispatch('fetch', {
+      endpoint: '/images/',
+      method: 'POST',
+      headers: {},
+      updateLoadingState: true,
+      payload
+    });
   },
 
   getScript({ dispatch }, payload) {
