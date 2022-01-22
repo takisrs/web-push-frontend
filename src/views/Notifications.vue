@@ -99,9 +99,6 @@ export default {
     Icon,
   },
   computed: {
-    token() {
-      return this.$store.getters.token;
-    },
     isLoading() {
       return this.$store.getters.isLoading;
     },

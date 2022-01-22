@@ -5,6 +5,7 @@ import Login from '../views/Login.vue';
 import Signup from '../views/Signup.vue';
 import Logs from '../views/Logs.vue';
 import Notifications from '../views/Notifications.vue';
+import Subscriptions from '../views/Subscriptions.vue';
 import Notification from '../views/Notification.vue';
 import Documentation from '../views/Documentation.vue';
 import store from '../store/index';
@@ -56,6 +57,14 @@ const routes = [
     path: '/notifications/:page?',
     name: 'Notifications',
     component: Notifications,
+    meta: {
+      requireAuthentication: true,
+    },
+  },
+  {
+    path: '/subscriptions/:page?',
+    name: 'Subscriptions',
+    component: Subscriptions,
     meta: {
       requireAuthentication: true,
     },

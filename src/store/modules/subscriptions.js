@@ -3,7 +3,7 @@ export default {
     getSubscriptions({ dispatch }) {
       return dispatch('fetch', {
         endpoint: '/subscriptions',
-        updateLoadingState: false,
+        updateLoadingState: true,
       });
     },
   },

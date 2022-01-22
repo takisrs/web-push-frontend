@@ -42,6 +42,15 @@
               class="nav-link"
               activeClass="active"
               aria-current="page"
+              to="/subscriptions"
+              >Subscriptions</router-link
+            >
+          </li>
+          <li class="nav-item" v-if="auth">
+            <router-link
+              class="nav-link"
+              activeClass="active"
+              aria-current="page"
               to="/logs"
               >Logs</router-link
             >
