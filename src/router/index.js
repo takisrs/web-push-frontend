@@ -18,78 +18,78 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      requireAuthentication: true,
-    },
+      requireAuthentication: true
+    }
   },
   {
     path: '/login',
     name: 'Login',
     component: Login,
     meta: {
-      requireAuthentication: false,
-    },
+      requireAuthentication: false
+    }
   },
   {
     path: '/signup',
     name: 'Signup',
     component: Signup,
     meta: {
-      requireAuthentication: false,
-    },
+      requireAuthentication: false
+    }
   },
   {
     path: '/logs',
     name: 'Logs',
     component: Logs,
     meta: {
-      requireAuthentication: true,
-    },
+      requireAuthentication: true
+    }
   },
   {
     path: '/documentation',
     name: 'Documentation',
     component: Documentation,
     meta: {
-      requireAuthentication: true,
-    },
+      requireAuthentication: true
+    }
   },
   {
     path: '/notifications/:page?',
     name: 'Notifications',
     component: Notifications,
     meta: {
-      requireAuthentication: true,
-    },
+      requireAuthentication: true
+    }
   },
   {
     path: '/subscriptions/:page?',
     name: 'Subscriptions',
     component: Subscriptions,
     meta: {
-      requireAuthentication: true,
-    },
+      requireAuthentication: true
+    }
   },
   {
     path: '/notification/create',
     name: 'NotificationCreate',
     component: Notification,
     meta: {
-      requireAuthentication: true,
-    },
+      requireAuthentication: true
+    }
   },
   {
     path: '/notification/edit/:id',
     name: 'NotificationEdit',
     component: Notification,
     meta: {
-      requireAuthentication: true,
-    },
-  },
+      requireAuthentication: true
+    }
+  }
 ];
 
 const router = new VueRouter({
   mode: 'history',
-  routes,
+  routes
 });
 
 router.beforeEach(function (to, from, next) {

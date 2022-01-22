@@ -12,7 +12,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoading: false,
-    messages: [],
+    messages: []
   },
   mutations,
   actions,
@@ -20,6 +20,6 @@ export default new Vuex.Store({
   modules: {
     auth: authModule,
     subscriptions: subscriptionsModule,
-    notifications: notificationsModule,
-  },
+    notifications: notificationsModule
+  }
 });

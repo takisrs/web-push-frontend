@@ -13,8 +13,8 @@ export default {
       body: method !== 'GET' ? payload : undefined,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + state.auth.token,
-      },
+        Authorization: 'Bearer ' + state.auth.token
+      }
     })
       .then(async (response) => {
         if (updateLoadingState) commit('setIsLoading', false);
@@ -31,13 +31,13 @@ export default {
   getScript({ dispatch }, payload) {
     return dispatch('fetch', {
       endpoint: `/scripts/${payload.type}?minify=1`,
-      updateLoadingState: false,
+      updateLoadingState: false
     });
   },
 
   getLogs({ dispatch }) {
     return dispatch('fetch', {
-      endpoint: `/logs`,
+      endpoint: `/logs`
     });
-  },
+  }
 };

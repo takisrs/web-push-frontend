@@ -3,7 +3,7 @@ export default {
     state.messages.push({
       message: data.message,
       class: data.class,
-      type: data.type || 'toast',
+      type: data.type || 'toast'
     });
 
     setTimeout(() => {
@@ -12,5 +12,5 @@ export default {
   },
   setIsLoading(state, isLoading) {
     state.isLoading = isLoading;
-  },
+  }
 };

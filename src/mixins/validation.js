@@ -27,7 +27,7 @@ export default {
         if (value == '') {
           this.$store.commit('setMessage', {
             class: 'danger',
-            message: 'The ' + field + ' field is required',
+            message: 'The ' + field + ' field is required'
           });
           return false;
         }
@@ -35,7 +35,7 @@ export default {
         if (!EMAIL_REGEX.test(String(value).toLowerCase())) {
           this.$store.commit('setMessage', {
             class: 'danger',
-            message: 'Invalid Email',
+            message: 'Invalid Email'
           });
           return false;
         }
@@ -43,12 +43,12 @@ export default {
         if (!URL_REGEX.test(String(value))) {
           this.$store.commit('setMessage', {
             class: 'danger',
-            message: 'Invalid url at ' + field + ' field',
+            message: 'Invalid url at ' + field + ' field'
           });
           return false;
         }
       }
       return true;
-    },
-  },
+    }
+  }
 };
