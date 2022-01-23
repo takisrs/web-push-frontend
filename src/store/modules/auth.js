@@ -16,7 +16,7 @@ export default {
     }
   },
   actions: {
-    signup({ dispatch }, payload) {
+    signup({ dispatch, commit }, payload) {
       return dispatch('fetch', {
         endpoint: '/auth/signup',
         method: 'POST',
@@ -26,6 +26,11 @@ export default {
           password: payload.password,
           website: payload.website
         })
+      }).then((data) => {
+        if (data.ok) {
+          commit('setMessage', { message: data.message, class: 'success' });
+          router.push('/login');
+        }
       });
     },
 

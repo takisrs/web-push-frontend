@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" v-if="!isLoading">
     <div class="col-md-6">
       <form method="POST">
         <div class="mb-3">
@@ -70,6 +70,11 @@ export default {
       password: '',
       website: ''
     };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.isLoading;
+    }
   },
   methods: {
     signup() {
